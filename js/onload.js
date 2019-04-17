@@ -1,11 +1,12 @@
 var game;
-window.onload = function()						//tu si nacitavam canvas, spustam funkciu game.start
+window.onload = function()
 {
     canvas = document.getElementById('theCanvas');
     game = new Game(canvas);
-    running_on = setTimeout(					//kebyze nespustim game.start cez setTimeout, nestihne sa nacitat Game
+    running_on = setTimeout(
         function(){
+            game.gameAudio.play();
             game.start();
         },
         60);
-}
+};

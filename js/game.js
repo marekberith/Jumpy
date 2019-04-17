@@ -3,18 +3,39 @@ class Game {
         this.jumpy = new Jumpy();
         this.bck = new Background();
         this.way = new Way();
+        this.components = new Components();
+        this.obstacle = new Obstacle();
+        this.gameAudio = new Audio('sound/Jumpy_main.mp3');
+        this.gameOverAudio = new Audio('sound/game_over.mp3');
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
         this.canvas.width = 1104;		//changed from 960x540px
         this.canvas.height = 621;
         var x = canvas.style.marginLeft = (window.innerWidth - canvas.width) / 2 + 'px';
-        this.number = this.returnNumber();
-        this.way.setWays(this.number);
+        this.way.setWays();
+        this.score = 0;
     }
 
     start() {
+        if(this.checkGameOver() === 1)
+            return;
         this.draw();
         requestAnimationFrame(this.start.bind(this));
+    }
+
+    checkGameOver()
+    {
+        for( let j = 0; j < 7; j++ )
+        {
+            if(this.way.actualWay[j][0] === 2 && Math.floor(this.way.actualWay[j][1]) < 100 &&
+                Math.floor(this.way.actualWay[j][1]) > 70 && this.jumpy.posy + this.jumpy.movement === this.jumpy.onloadposy) {
+                this.gameAudio.pause();
+                this.score = i;
+                this.gameOverAudio.play();
+                return 1;
+            }
+        }
+        return 0;
     }
 
     draw() {
@@ -24,7 +45,19 @@ class Game {
         this.drawJumpy();
         this.way.checkWays(this.returnNumber());
         this.way.moveWays();
+        this.components.drawComponents();
+        if(i % 10 === 0)
+            this.score = i;
+        this.drawText();
         this.way.increaseSpeed();
+        //this.obstacle.generateObstacle(this.returnNumber());
+    }
+
+    drawText() {
+        this.ctx.beginPath();
+        this.ctx.font = "30px Arial";
+        this.ctx.fillText(`${this.score}m`, 750, 50);
+        this.ctx.closePath();
     }
 
     drawBackground() {
@@ -42,6 +75,6 @@ class Game {
     }
 
     returnNumber() {
-        return Math.round(Math.random());
+        return Math.floor(Math.random() *(2 + 1));
     }
 }
