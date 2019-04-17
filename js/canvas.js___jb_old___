@@ -4,7 +4,7 @@ let i = 0;
 class Jumpy {
 	constructor(posx, posy) {
 		this.posx = 100;
-		this.posy = canvas.height + 98;
+		this.posy = canvas.height + 97;
 		this.look = [new Image(), new Image(), new Image()];
 		this.look[0].src = 'graphics/Jumpy_rightlegforwards_a.png';
 		this.look[1].src = 'graphics/Jumpy_leftlegforwards_a.png';
