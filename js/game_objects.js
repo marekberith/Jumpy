@@ -49,9 +49,19 @@ class Background
 	constructor(){
 		this.background_layer = [new Image(), new Image()];
 		this.background_layer[0].src = 'graphics/basic_layer_lgh.png';
-		this.background_layer[1].src = 'graphics/basic_layer_drk.png';
+		this.background_layer[1].src = 'graphics/basic_layer_dark_a.png';
+		this.lookSet = 0;
 	}
-
+	backgroundSwitch()
+	{
+		if(i % 600 === 0 && i != 0)
+		{
+			if (this.lookSet === 0)
+				this.lookSet = 1;
+			else if(this.lookSet === 1)
+				this.lookSet = 0;
+		}
+	}
 }
 
 class Way
@@ -66,7 +76,7 @@ class Way
 		this.speed = 15;
 		this.onloadSpeed = 15;
 		for(let j = 0; j < 7; j++)
-			this.actualWay[j] = new Array(3);
+			this.actualWay[j] = new Array(4);
 	}
 	setWays()
 	{
@@ -87,14 +97,17 @@ class Way
 	}
 	checkWays(number)
 	{
-		if(this.actualWay[6][1] < -192) {
-			this.actualWay.pop();
-			this.actualWay.splice(0,0, new Array(3));
-			if(number === 2 && this.actualWay[1][0] === number)
-				number = Math.round(Math.random());
-			this.actualWay[0][0] = number;
-			this.actualWay[0][1] = this.actualWay[1][1] + 192;
-			this.actualWay[0][2] = canvas.height - 132;
+		this.actualWay.pop();
+		this.actualWay.splice(0,0, new Array(3));
+		if((number === 2 && this.actualWay[1][0] === number))
+			number = Math.round(Math.random());
+		this.actualWay[0][0] = number;
+		this.actualWay[0][1] = this.actualWay[1][1] + 192;
+		this.actualWay[0][2] = canvas.height - 132;
+		if(this.actualWay[0][0] !== 2)
+		{
+			if(Math.round(Math.random()) === 1)
+				this.actualWay[0][3] = Math.floor(Math.random() * (4));
 		}
 	}
 	increaseSpeed()
@@ -110,30 +123,18 @@ class Way
 class Obstacle
 {
 	constructor() {
-		//super();
 		this.obstacle_arr = [new Image(), new Image(), new Image(), new Image()];
 		this.obstacle_arr[0].src = 'graphics/kamen.png';
 		this.obstacle_arr[1].src = 'graphics/kamen2.png';
-		this.obstacle_arr[2].src = 'graphics/kamen3.png';
-		this.obstacle_arr[3].src = 'graphics/kamen4.png';
+		this.obstacle_arr[2].src = 'graphics/kamen_sneh.png';
+		this.obstacle_arr[3].src = 'graphics/kamen_sneh2.png';
 		this.actualObstacles = new Array(3);
 		for(let j = 0; j < 4; j++)
 			this.actualObstacles[j] = new Array(3);
 	}
-	/*generateObstacle(number)
-	{
-		if(i % 200 === 0)
-		{
-			if(number === 1)
-			{
-				Math.floor(Math.random() * (3 + 1));			//Math.floor(Math.random() *(max - min + 1) + min
-
-			}
-		}
-	}*/
 }
 
-class Components
+/*class Components
 {
 	constructor() {
 		this.component_arr = [new Image()]
@@ -144,4 +145,4 @@ class Components
 
 	}
 
-}
+}*/

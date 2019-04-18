@@ -2,27 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cd3f72cf-e19c-4415-9f26-d6b6ae99aff0" name="Default Changelist" comment="Early Alpha 0.2, added multiple objects &amp; functions">
-      <change afterPath="$PROJECT_DIR$/js/menu.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/js/onload.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/návrat_do_menu.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/obstacle.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/onelive.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/ovládanie.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/priepasť.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/rebricek.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/settings.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/sky_shadow.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/sound-2935466.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/sound-2935467_1280.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/space-bar-icon-10.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/star.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/stone.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/trap.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/twolvs.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/vráť sa na menu.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphics/Учебник цифрового рисунка _ Ardezart™.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml___jb_old___" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml___jb_old___" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/canvas.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/canvas.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/game.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/game.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/game_objects.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/game_objects.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/input_handler.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/input_handler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/onload.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/onload.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,11 +21,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="18" column="7" lean-forward="true" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
+            <state relative-caret-position="306">
+              <caret line="17" column="27" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="27" />
               <folding>
                 <element signature="n#style#0;n#h1#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#canvas#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -52,8 +38,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/game_objects.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="143" selection-start-line="143" selection-end-line="143" />
+            <state relative-caret-position="1872">
+              <caret line="110" column="9" lean-forward="true" selection-start-line="110" selection-start-column="9" selection-end-line="110" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -62,16 +48,16 @@
         <entry file="file://$PROJECT_DIR$/js/input_handler.js">
           <provider selected="true" editor-type-id="text-editor">
             <state>
-              <caret column="48" lean-forward="true" selection-start-column="48" selection-end-column="48" />
+              <caret column="35" selection-start-column="35" selection-end-column="35" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/game.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="846">
-              <caret line="47" column="41" selection-start-line="47" selection-start-column="41" selection-end-line="47" selection-end-column="41" />
+            <state relative-caret-position="330">
+              <caret line="40" column="13" lean-forward="true" selection-start-line="40" selection-start-column="13" selection-end-line="40" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -79,8 +65,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/onload.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="11" column="2" lean-forward="true" selection-start-line="11" selection-start-column="2" selection-end-line="11" selection-end-column="2" />
+            <state relative-caret-position="396">
+              <caret line="22" column="10" selection-start-line="22" selection-start-column="10" selection-end-line="22" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -109,26 +95,27 @@
         <option value="$PROJECT_DIR$/js/canvas.js" />
         <option value="$PROJECT_DIR$/js/menu.js" />
         <option value="$PROJECT_DIR$/js/input_handler..js" />
-        <option value="$PROJECT_DIR$/js/input_handler.js" />
         <option value="$PROJECT_DIR$/js/gameover.js" />
-        <option value="$PROJECT_DIR$/js/game.js" />
-        <option value="$PROJECT_DIR$/js/game_objects.js" />
-        <option value="$PROJECT_DIR$/js/onload.js" />
+        <option value="$PROJECT_DIR$/js/input_handler.js" />
         <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/js/onload.js" />
+        <option value="$PROJECT_DIR$/js/game_objects.js" />
+        <option value="$PROJECT_DIR$/js/game.js" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds">
     <option name="x" value="260" />
     <option name="y" value="20" />
-    <option name="width" value="1400" />
-    <option name="height" value="1000" />
+    <option name="width" value="1390" />
+    <option name="height" value="998" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -156,7 +143,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -217,11 +203,17 @@
       <workItem from="1555439324432" duration="11630000" />
       <workItem from="1555477587183" duration="13162000" />
       <workItem from="1555504082685" duration="13263000" />
+      <workItem from="1555518685231" duration="56000" />
+      <workItem from="1555519848448" duration="7783000" />
+      <workItem from="1555568656877" duration="2079000" />
+      <workItem from="1555580738791" duration="359000" />
+      <workItem from="1555586041127" duration="3345000" />
+      <workItem from="1555596335701" duration="6157000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="67498000" />
+    <option name="totallyTimeSpent" value="87277000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -233,10 +225,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
+    <frame x="762" y="0" width="781" height="830" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21744967" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.38002774" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -244,7 +235,38 @@
       <window_info id="UI Designer" order="5" />
       <window_info id="Learn" order="6" />
       <window_info id="Favorites" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" weight="0.3286119" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3286119" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.3286119" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Database Changes" order="9" />
+      <window_info anchor="bottom" id="Terminal" order="10" />
+      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" weight="0.3280255" />
+      <window_info anchor="bottom" id="Messages" order="12" weight="0.3286119" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Theme Preview" order="4" />
+      <window_info anchor="right" id="Maven" order="5" />
+      <window_info anchor="right" id="Capture Analysis" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="Database" order="8" />
+    </layout>
+    <layout-to-restore>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22416107" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="Capture Tool" order="4" />
+      <window_info id="UI Designer" order="5" />
+      <window_info id="Learn" order="6" />
+      <window_info id="Favorites" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -257,6 +279,7 @@
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Terminal" order="10" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" weight="0.3280255" />
+      <window_info anchor="bottom" id="Messages" order="12" weight="0.3286119" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -266,7 +289,7 @@
       <window_info anchor="right" id="Capture Analysis" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info anchor="right" id="Database" order="8" />
-    </layout>
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -282,13 +305,7 @@
     <entry file="file://$PROJECT_DIR$/graphics/ground_grass.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/gameover.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="3" column="34" selection-start-line="3" selection-start-column="34" selection-end-line="3" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/js/gameover.js" />
     <entry file="file://$PROJECT_DIR$/graphics/cloud.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -298,46 +315,44 @@
     <entry file="file://$PROJECT_DIR$/graphics/cloud3.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/is-0DS55.tmp/editor-test.txt" />
     <entry file="file://$PROJECT_DIR$/js/input_handler.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret column="48" lean-forward="true" selection-start-column="48" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/game.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="846">
-          <caret line="47" column="41" selection-start-line="47" selection-start-column="41" selection-end-line="47" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/is-0DS55.tmp/editor-test.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/game_objects.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="143" selection-start-line="143" selection-end-line="143" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/onload.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="11" column="2" lean-forward="true" selection-start-line="11" selection-start-column="2" selection-end-line="11" selection-end-column="2" />
+          <caret column="35" selection-start-column="35" selection-end-column="35" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="18" column="7" lean-forward="true" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
+        <state relative-caret-position="306">
+          <caret line="17" column="27" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="27" />
           <folding>
             <element signature="n#style#0;n#h1#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#canvas#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#footer#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/onload.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="22" column="10" selection-start-line="22" selection-start-column="10" selection-end-line="22" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/game_objects.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1872">
+          <caret line="110" column="9" lean-forward="true" selection-start-line="110" selection-start-column="9" selection-end-line="110" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/game.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="40" column="13" lean-forward="true" selection-start-line="40" selection-start-column="13" selection-end-line="40" selection-end-column="13" />
         </state>
       </provider>
     </entry>
