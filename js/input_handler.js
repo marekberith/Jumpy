@@ -3,7 +3,7 @@ window.addEventListener("keydown", function () {
         if (key === 32) {
             if(game.jumpy.jump === false && game.jumpy.posy + game.jumpy.movement === 250)
             {
-                //console.log('Pociatocna pozicia je:' + game.jumpy.posy + ' vyska canvasu' + canvas.height);
+                console.log('Pociatocna pozicia je:' + game.jumpy.posy + ' vyska canvasu' + canvas.height);
                 game.jumpy.jump = true;
                 //console.log(game.jumpy.posy);
                 //console.log('Space');
@@ -11,6 +11,5 @@ window.addEventListener("keydown", function () {
         }
         if(key === 82)
         {
-
         }
 });

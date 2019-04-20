@@ -3,7 +3,7 @@ class Game {
         this.jumpy = new Jumpy();
         this.bck = new Background();
         this.way = new Way();
-       // this.components = new Components();
+        this.component = new Component();
         this.obstacle = new Obstacle();
         this.gameAudio = new Audio('sound/Jumpy_main.mp3');
         this.gameOverAudio = new Audio('sound/game_over.mp3');
@@ -15,6 +15,7 @@ class Game {
         this.gameOverScreen = new Image(this.canvas.width, this.canvas.height);
         this.gameOverScreen.src = 'graphics/gameover.jpg';
         this.way.setWays();
+        this.component.generateClouds();
         this.score = 0;
     }
 
@@ -31,13 +32,14 @@ class Game {
         for( let j = 0; j < 7; j++ )
         {
             if(this.way.actualWay[j][0] === 2 && Math.floor(this.way.actualWay[j][1]) < 100 &&
-                Math.floor(this.way.actualWay[j][1]) > 70 && this.jumpy.posy + this.jumpy.movement === this.jumpy.onloadposy)
+                Math.floor(this.way.actualWay[j][1]) > 60 && this.jumpy.posy + this.jumpy.movement - 100 === this.jumpy.onloadposy)
             {
                 this.gameAudio.pause();
                 return 1;
             }
-            if(this.way.actualWay[j][3] >= 0 && this.way.actualWay[j][3] <= 3 && this.way.actualWay[j][1] < 100 &&
-                this.way.actualWay[j][1] > 70 && this.jumpy.posy + this.jumpy.movement === this.jumpy.onloadposy)
+            if( this.way.actualWay[j][3] >= 0 && this.way.actualWay[j][3] <= 4 &&   //ak je prekazka
+                this.way.actualWay[j][1] > 95 && this.way.actualWay[j][1] < 105 && //a zaroven je na x-pozicii Jumpyho
+                this.jumpy.posy + this.jumpy.movement > this.jumpy.posy + 100 - 68)  //a zaroven Jumpy vyssie ako prekazka???
             {
                 this.gameAudio.pause();
                 return 1;
@@ -50,17 +52,17 @@ class Game {
        // console.log(i);
         this.bck.backgroundSwitch();
         this.drawBackground();
+        this.drawClouds();
         this.jumpy.checkJump();
-        this.jumpy.switchJumpy();
+        this.jumpy.jumpySwitch();
         this.drawJumpy();
         if(this.way.actualWay[6][1] < -192)
-        {
             this.way.checkWays(this.returnNumber());
-            //this.obstacle.generateObstacle(Math.round(Math.random()));
-            this.drawObstacles();
-        }
         this.way.moveWays();
-        //this.components.drawComponents();
+        this.component.generateClouds();
+        this.component.generatePotion();
+        this.component.movePotion();
+        this.component.moveClouds();
         if(i % 10 === 0)
             this.score = i;
         this.drawText();
@@ -74,25 +76,19 @@ class Game {
         this.ctx.closePath();
     }
 
-    drawObstacles() {
-        //console.log('bla');
-    }
-
     drawBackground() {
         this.ctx.drawImage(this.bck.background_layer[this.bck.lookSet], 0, 0, 1104, 621);	//background
         for (let j = 0; j < 7; j++) {
-            //console.log(this.way.actualWay[j][3]);
-            this.ctx.drawImage(this.way.way_arr[this.way.actualWay[j][0]], this.way.actualWay[j][1], this.way.actualWay[j][2], 192, 132);
-            if(this.way.actualWay[j][3] >= 0 && this.way.actualWay[j][3] <= 3)
+            this.ctx.drawImage(this.way.way_arr[this.way.actualWay[j][0]], this.way.actualWay[j][1], this.way.actualWay[j][2], 192, 132);      //vykreslovanie cesty
+            if(this.way.actualWay[j][3] >= 0 && this.way.actualWay[j][3] <= 4)                      //vykreslovanie prekazok
             {
-                console.log('BLA');
-                this.ctx.drawImage(this.obstacle.obstacle_arr[this.way.actualWay[j][3]], this.way.actualWay[j][1], this.way.actualWay[j][2] - 53, 90, 58);
+                this.ctx.drawImage(this.obstacle.obstacle_arr[this.way.actualWay[j][3]], this.way.actualWay[j][1], this.way.actualWay[j][2] - 53, 90, 68);
             }
-            /*if(this.way.actualWay[j][3] !== -1 && this.way.actualWay[j][3] !== undefined)
+            if(this.component.actualWay[j][3] === "potion")
             {
-                console.log(this.obstacle.obstacle_arr[this.way.actualWay[0][3]]);
-                this.ctx.drawImage(this.obstacle.obstacle_arr[this.way.actualWay[0][3]], this.way.actualWay[0][1], 100, 150, 150);
-            }*/
+                console.log('POTION found');
+                this.ctx.drawImage(this.component.component_arr[3], this.component.actualWay[j][1], this.component.actualWay[j][2] - 53, 90, 68);
+            }
         }
     }
 
@@ -101,6 +97,13 @@ class Game {
             this.ctx.drawImage(this.jumpy.look[2], this.jumpy.posx, this.jumpy.posy + this.jumpy.movement, 171, 241);
         else
             this.ctx.drawImage(this.jumpy.look[this.jumpy.lookSet], this.jumpy.posx, this.jumpy.posy + this.jumpy.movement, 171, 241);
+    }
+
+    drawClouds(){
+        for(let j = 0; j < 4; j++)
+        {
+            this.ctx.drawImage(this.component.component_arr[this.component.actualComponents[j][0]], this.component.actualComponents[j][1], this.component.actualComponents[j][2], 120, 120);
+        }
     }
 
     returnNumber() {
