@@ -1,3 +1,4 @@
+//let mark = 0;
 class Game {
     constructor(canvas) {
         this.jumpy = new Jumpy();
@@ -16,36 +17,68 @@ class Game {
         this.gameOverScreen.src = 'graphics/gameover.jpg';
         this.way.setWays();
         this.component.generateClouds();
+        //this.component.generatePotion(this.way.actualWay);
         this.score = 0;
+        this.numberOfLifes = 3;
     }
 
     start() {
-       if(this.checkGameOver() === 1) {
-            return;
-        }
-        this.draw();
-        requestAnimationFrame(this.start.bind(this));
+       if(this.checkGameOver() === 1)
+           return;
+       if(this.way.potionActive === true)
+            this.infected();
+       this.draw();
+       requestAnimationFrame(this.start.bind(this));
     }
 
     checkGameOver()
     {
-        for( let j = 0; j < 7; j++ )
-        {
-            if(this.way.actualWay[j][0] === 2 && Math.floor(this.way.actualWay[j][1]) < 100 &&
-                Math.floor(this.way.actualWay[j][1]) > 60 && this.jumpy.posy + this.jumpy.movement - 100 === this.jumpy.onloadposy)
+        let isDepression = 0;
+        if(i % 1 !== 0.5) {
+            for (let j = 0; j < 7; j++)
             {
-                this.gameAudio.pause();
-                return 1;
+                if (this.way.actualWay[j][0] === 2 && Math.floor(this.way.actualWay[j][1]) < 100 &&
+                    Math.floor(this.way.actualWay[j][1]) > 60 && (this.jumpy.posy + this.jumpy.movement - 100 === this.jumpy.onloadposy) &&
+                    this.way.depression === false)
+                {
+                    isDepression = 1;
+                    this.way.depression = true;
+                    this.numberOfLifes--;
+                    if (this.numberOfLifes === 0)
+                    {
+                        this.gameAudio.pause();
+                        return 1;
+                    }
+                    break;
+                }
+                if( this.way.actualWay[j][3] >= 0 && this.way.actualWay[j][3] <= 4 &&   //ak je prekazka
+                    (Math.floor(this.way.actualWay[j][1]) < 100 && Math.floor(this.way.actualWay[j][1]) > 60) && //a zaroven je na x-pozicii Jumpyho
+                    this.jumpy.posy + this.jumpy.movement > this.jumpy.posy + 100 - 68)//a zaroven Jumpy vyssie ako prekazka
+                {
+                    this.numberOfLifes--;
+                    if(this.numberOfLifes === 0)
+                    {
+                        this.gameAudio.pause();
+                        return 1;
+                    }
+                    break;
+                }
             }
-            if( this.way.actualWay[j][3] >= 0 && this.way.actualWay[j][3] <= 4 &&   //ak je prekazka
-                this.way.actualWay[j][1] > 95 && this.way.actualWay[j][1] < 105 && //a zaroven je na x-pozicii Jumpyho
-                this.jumpy.posy + this.jumpy.movement > this.jumpy.posy + 100 - 68)  //a zaroven Jumpy vyssie ako prekazka???
-            {
-                this.gameAudio.pause();
-                return 1;
-            }
+            if (isDepression === 0 && this.way.depression === true)
+                this.way.depression = false;
         }
-        return 0;
+    }
+
+    infected()
+    {
+        this.way.potionActive = false;
+        this.way.potionSpeed = this.way.speed * 0.25;
+        setTimeout(() => this.disableInfection(), 3000);
+    }
+
+    disableInfection(){
+        this.way.potionSpeed = 0;
+        this.way.potionSet = false;
     }
 
     draw() {
@@ -57,22 +90,32 @@ class Game {
         this.jumpy.jumpySwitch();
         this.drawJumpy();
         if(this.way.actualWay[6][1] < -192)
-            this.way.checkWays(this.returnNumber());
+            this.way.checkWays(this.returnNumber(), this.component.potionPosX, this.component.potionActive);
         this.way.moveWays();
+        this.way.checkPotion(this.jumpy.posx, this.jumpy.movement);
         this.component.generateClouds();
-        this.component.generatePotion();
-        this.component.movePotion();
         this.component.moveClouds();
         if(i % 10 === 0)
             this.score = i;
-        this.drawText();
+        this.drawPanel();
         this.way.increaseSpeed();
     }
 
-    drawText() {
+    drawPanel() {
+        this.ctx.drawImage(this.component.component_arr[3], 0, 621 - 30);
+        for(let j = 0; j < this.numberOfLifes; j++)
+            this.ctx.drawImage(this.component.component_arr[4], 100 + (j*24), 621 - 27, 24, 24);
+        if(this.way.potionSet === true)
+        {
+            this.ctx.beginPath();
+            this.ctx.font = "20px Monospace";
+            this.ctx.fillStyle = "#ffffff";
+            this.ctx.fillText(`Si nakazený ! Bežíš 3x rýchlosťou`, this.canvas.width/2 - 200, this.canvas.height - 5);
+        }
         this.ctx.beginPath();
-        this.ctx.font = "30px Arial";
-        this.ctx.fillText(`${this.score}m`, 750, 50);
+        this.ctx.font = "25px Monospace";
+        this.ctx.fillStyle = "#ffffff";
+        this.ctx.fillText(`${this.score} metrov`, 900, this.canvas.height - 5);
         this.ctx.closePath();
     }
 
@@ -80,14 +123,12 @@ class Game {
         this.ctx.drawImage(this.bck.background_layer[this.bck.lookSet], 0, 0, 1104, 621);	//background
         for (let j = 0; j < 7; j++) {
             this.ctx.drawImage(this.way.way_arr[this.way.actualWay[j][0]], this.way.actualWay[j][1], this.way.actualWay[j][2], 192, 132);      //vykreslovanie cesty
-            if(this.way.actualWay[j][3] >= 0 && this.way.actualWay[j][3] <= 4)                      //vykreslovanie prekazok
+            if(this.way.actualWay[j][3] >= 0 && this.way.actualWay[j][3] <= 5)                      //vykreslovanie prekazok
             {
-                this.ctx.drawImage(this.obstacle.obstacle_arr[this.way.actualWay[j][3]], this.way.actualWay[j][1], this.way.actualWay[j][2] - 53, 90, 68);
-            }
-            if(this.component.actualWay[j][3] === "potion")
-            {
-                console.log('POTION found');
-                this.ctx.drawImage(this.component.component_arr[3], this.component.actualWay[j][1], this.component.actualWay[j][2] - 53, 90, 68);
+                if(this.way.actualWay[j][3] === 5)
+                    this.ctx.drawImage(this.obstacle.obstacle_arr[this.way.actualWay[j][3]], this.way.actualWay[j][1], this.way.actualWay[j][2] - 53, 48, 48);
+                else
+                    this.ctx.drawImage(this.obstacle.obstacle_arr[this.way.actualWay[j][3]], this.way.actualWay[j][1], this.way.actualWay[j][2] - 53, 90, 68);
             }
         }
     }

@@ -92,7 +92,11 @@ class Way
 		this.way_arr[2].src = 'graphics/emptyobject.png';
 		this.actualWay = new Array(6);
 		this.speed = 14;
+		this.potionSpeed = 0;
+		this.potionSet = false;
 		this.onloadSpeed = 14;
+		this.potionActive = false;
+		this.depression = false;
 		for(let j = 0; j < 7; j++)
 			this.actualWay[j] = new Array(4);
 	}
@@ -111,10 +115,11 @@ class Way
 	moveWays()
 	{
 		for(let j = 0; j < 7; j++)
-			this.actualWay[j][1] -= this.speed;
+			this.actualWay[j][1] -= (this.speed + this.potionSpeed);
 	}
 	checkWays(number)
 	{
+		//mark++;
 		this.actualWay.pop();
 		this.actualWay.splice(0,0, new Array(3));
 		if(number === 2 && this.actualWay[1][0] === number)
@@ -124,13 +129,36 @@ class Way
 		this.actualWay[0][0] = number;
 		this.actualWay[0][1] = this.actualWay[1][1] + 192;
 		this.actualWay[0][2] = canvas.height - 132;
+		//console.log(this.actualWay[0][2]);
 		if(this.actualWay[0][0] !== 2 && this.actualWay[1][3] === undefined && this.actualWay[2][3] === undefined)
 		{
 			if(Math.round(Math.random()) === 1)
 				if(	this.actualWay[1][3] === undefined 										//prekazka nesmie nasledovat
 					&& (this.actualWay[1][0] !== 2 && this.actualWay[2][3] === undefined)	//nesmie nasledovat priepast a prekazka
 					&& (this.actualWay[2][0] !== 2))
-					this.actualWay[0][3] = Math.floor(Math.random() * (5));
+					if(this.potionSet === false)
+						this.actualWay[0][3] = Math.floor(Math.random() * (6));
+					else
+						this.actualWay[0][3] = Math.floor(Math.random() * (5));
+		}
+	}
+	checkPotion(posy, movement)
+	{
+		if(this.potionSet === false)
+		{
+			for(let j = 0; j < 7; j++)
+			{
+				if (this.actualWay[j][3] === 5) {
+					if (this.actualWay[j][1] > 88 &&	//kontrola pozicie x
+						this.actualWay[j][1] < 112 &&
+						(posy + movement > posy + 100 - 48))	//kontrola pozicie y
+					{
+						this.potionActive = true;
+						this.potionSet = true;
+						console.log('hit');
+					}
+				}
+			}
 		}
 	}
 	increaseSpeed()
@@ -146,26 +174,26 @@ class Way
 class Obstacle
 {
 	constructor() {
-		this.obstacle_arr = [new Image(), new Image(), new Image(), new Image(), new Image()];
+		this.obstacle_arr = [new Image(), new Image(), new Image(), new Image(), new Image(), new Image()];
 		this.obstacle_arr[0].src = 'graphics/kamen.png';
 		this.obstacle_arr[1].src = 'graphics/kamen2.png';
 		this.obstacle_arr[2].src = 'graphics/kamen_sneh.png';
 		this.obstacle_arr[3].src = 'graphics/kamen_sneh2.png';
 		this.obstacle_arr[4].src = 'graphics/obstacle.png';
+		this.obstacle_arr[5].src = 'graphics/potion.png';
 	}
 }
 
-class Component extends Way
+class Component
 {
 	constructor() {
-		super();
-		this.component_arr = [new Image(), new Image(), new Image(), new Image()];
+		this.component_arr = [new Image(), new Image(), new Image(), new Image(), new Image()];
 		this.component_arr[0].src = 'graphics/cloud.png';
 		this.component_arr[1].src = 'graphics/cloud2.png';
 		this.component_arr[2].src = 'graphics/cloud3.png';
-		this.component_arr[3].src = 'graphics/potion.png';
+		this.component_arr[3].src = 'graphics/panel.png';
+		this.component_arr[4].src = 'graphics/lifeicon.png';
 		this.actualComponents = [[],[]];
-		this.potionActive = 0;
 		for(let j = 0; j < 4; j++)
 			this.actualComponents[j] = new Array(4);
 	}
@@ -190,40 +218,22 @@ class Component extends Way
 		{
 			this.actualComponents[1][0] = Math.floor(Math.random() * (3));
 			this.actualComponents[1][1] = canvas.width;											//pos x;
-			this.actualComponents[1][2] = Math.floor(Math.random() * (100));		//pos y;
+			this.actualComponents[1][2] = Math.floor(Math.random() * (50));		//pos y;
 			this.actualComponents[1][3] = Math.random();
 		}
 		if(this.actualComponents[2][1] === undefined || this.actualComponents[2][1] > 128 + canvas.width)
 		{
 			this.actualComponents[2][0] = Math.floor(Math.random() * (3));
 			this.actualComponents[2][1] = 0;											//pos x;
-			this.actualComponents[2][2] = Math.floor(Math.random() * (100));		//pos y;
+			this.actualComponents[2][2] = Math.floor(Math.random() * (50));		//pos y;
 			this.actualComponents[2][3] = Math.random();
 		}
 		if(this.actualComponents[3][1] === undefined || this.actualComponents[3][1] > 128 + canvas.width)
 		{
 			this.actualComponents[3][0] = Math.floor(Math.random() * (3));
 			this.actualComponents[3][1] = 0;											//pos x;
-			this.actualComponents[3][2] = Math.floor(Math.random() * (100));		//pos y;
+			this.actualComponents[3][2] = Math.floor(Math.random() * (50));		//pos y;
 			this.actualComponents[3][3] = Math.random();
 		}
-	}
-	generatePotion()
-	{
-		if (i % 200 === 0) {
-			if (this.actualWay[0][0] !== 2 && this.actualWay[0][3] === undefined)
-			{
-				console.log('POTION generated');
-				this.actualWay[0][3] = "potion";
-				this.actualWay[0][2] = this.actualWay[0][2];
-				this.actualWay[0][1] = this.actualWay[0][1];
-				console.log(this.actualWay[0][3]);
-			}
-		}
-	}
-	movePotion()
-	{
-		this.actualWay[0][1] -= this.speed;
-		console.log('JE to: ' + this.actualWay[0][3]);
 	}
 }
