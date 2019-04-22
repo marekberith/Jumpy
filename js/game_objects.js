@@ -237,3 +237,17 @@ class Component
 		}
 	}
 }
+
+class Instruction
+{
+	constructor()
+	{
+		this.motivationSet = false;
+		this.instruction_arr = [];
+		this.instruction_arr[0] = "Si príliš pomalý, pridaj trochu !";
+		this.instruction_arr[1] = "Aký si lenivec, skáč poriadne !";
+		this.instruction_arr[2] = "Bež tak, aby si sa nezranil !";
+		this.instruction_arr[3] = "Zase budeš posledný !";
+		this.instruction_arr[4] = "Keď sa neotráviš, daľej zabežíš !";
+	}
+}
