@@ -1,4 +1,3 @@
-//let mark = 0;
 class Game {
     constructor(canvas) {
         this.jumpy = new Jumpy();
@@ -9,6 +8,7 @@ class Game {
         this.instruction = new Instruction();
         this.gameAudio = new Audio('sound/Jumpy_main.mp3');
         this.gameOverAudio = new Audio('sound/game_over.mp3');
+        this.gameMiss = new Audio('sound/miss.mp3');
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
         this.canvas.width = 1104;		//changed from 960x540px
@@ -23,18 +23,74 @@ class Game {
     }
 
     start() {
-       if(this.checkGameOver() === 1)
-           return;
-       if(this.way.potionActive === true)
+        console.log(this.jumpy.posy, this.jumpy.movement);
+        if(this.checkGameOver() === 1)
+            return;
+        if(this.way.potionActive === true)
             this.infected();
-       this.draw();
-       this.way.increaseSpeed();
-       requestAnimationFrame(this.start.bind(this));
+        this.draw();
+        this.way.increaseSpeed();
+        requestAnimationFrame(this.start.bind(this));
     }
 
+    restart()
+    {
+        this.setVariables();
+        assets.playAgain.style.display = "none";
+        assets.backtoMenu.style.display = "none";
+        assets.playAgain.removeAttribute('onclick');
+        assets.backtoMenu.removeAttribute('onclick');
+        this.gameOverAudio.pause();
+        this.gameOverAudio.currentTime = 0;
+        this.gameAudio.currentTime = 0;
+        this.gameAudio.play();
+        this.start();
+    }
+
+    setVariables()      //this function starts only when restarting game !
+    {
+        this.jumpy.posx = 100;
+        this.jumpy.posy = 150;
+        this.jumpy.onloadposy = 150;
+        this.jumpy.movement = 100;
+        this.jumpy.velUp = 26;
+        this.jumpy.velDown = 0;
+        this.jumpy.distance100 = 0;
+        this.jumpy.jump = true;
+        this.jumpy.lookSet = 0;
+        this.jumpy.lookSetSpeed = 10;
+        this.bck.lookSet = 0;
+        this.way.speed = 14;
+        this.way.potionSpeed = 0;
+        this.way.potionSet = false;
+        this.way.onloadSpeed = 14;
+        this.way.potionActive = false;
+        this.way.depression = false;
+        for(let j = 0; j < 7; j++)
+        {
+            for(let k = 0; k < 5; k++)
+            {
+                this.way.actualWay[j][k] = undefined;
+            }
+        }
+        for(let j = 0; j < 4; j++)
+        {
+            for(let k = 0; k < 4; k++)
+            {
+                this.component.component_arr[j][k] = undefined;
+            }
+        }
+        this.instruction.motivationSet = false;
+        i = 0;
+        this.way.setWays();
+        this.component.generateClouds();
+        this.score = 0;
+        this.numberOfLifes = 3;
+    }
     checkGameOver()
     {
         let isDepression = 0;
+        let isObstacle = 0;
         if(i % 1 !== 0.5) {
             for (let j = 0; j < 7; j++)
             {
@@ -50,23 +106,29 @@ class Game {
                         this.gameAudio.pause();
                         return 1;
                     }
+                    this.gameMiss.play();
                     break;
                 }
                 if( this.way.actualWay[j][3] >= 0 && this.way.actualWay[j][3] <= 4 &&   //ak je prekazka
                     (Math.floor(this.way.actualWay[j][1]) < 100 && Math.floor(this.way.actualWay[j][1]) > 60) && //a zaroven je na x-pozicii Jumpyho
-                    this.jumpy.posy + this.jumpy.movement > this.jumpy.posy + 100 - 68)//a zaroven Jumpy vyssie ako prekazka
+                    this.jumpy.posy + this.jumpy.movement > this.jumpy.posy + 100 - 68 && this.way.obstcl === false)//a zaroven Jumpy vyssie ako prekazka
                 {
+                    isObstacle = 1;
+                    this.way.obstcl = true;
                     this.numberOfLifes--;
                     if(this.numberOfLifes === 0)
                     {
                         this.gameAudio.pause();
                         return 1;
                     }
+                    this.gameMiss.play();
                     break;
                 }
             }
             if (isDepression === 0 && this.way.depression === true)
                 this.way.depression = false;
+            if (isObstacle === 0 && this.way.obstcl === true)
+                this.way.obstcl = false;
         }
     }
 

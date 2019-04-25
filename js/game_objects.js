@@ -1,10 +1,10 @@
 let i = 0;
 
 class Jumpy {
-	constructor(posx, posy) {
+	constructor() {
 		this.posx = 100;
-		this.posy = canvas.height;
-		this.onloadposy = canvas.height;
+		this.posy = 150;
+		this.onloadposy = 150;
 		this.movement = 100;
 		this.velUp = 26;
 		this.velDown = 0;
@@ -97,6 +97,7 @@ class Way
 		this.onloadSpeed = 14;
 		this.potionActive = false;
 		this.depression = false;
+		this.obstcl = false;
 		for(let j = 0; j < 7; j++)
 			this.actualWay[j] = new Array(4);
 	}

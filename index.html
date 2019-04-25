@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="sk" xmlns="http://www.w3.org/1999/html">
 <head>
 	<meta charset="UTF-8">
 	<meta name="description" content="@mberith_interactive_game">
@@ -8,12 +8,27 @@
 	<script src = "js/game.js"></script>
 	<script src = "js/input_handler.js"></script>
 	<script src = "js/onload.js"></script>
+	<script src = "js/chart.js"></script>
+	<script src = "js/assets.js"></script>
+	<script src = "js/menu.js"></script>
+	<link rel="stylesheet" href="css/assets.css">
 	<title> Marek Berith interactive game</title>
 </head>
-<body>
-	<h1 style = "font-family: monospace; color: #003399; text-align: center;"> Jumpy - interactive run and jump game </h1>
-	<canvas id = "theCanvas" style = "border: 1px solid black; margin: none;"> </canvas>
-	<footer style = "position: absolute; bottom: 1%; font-family: monospace; font-size: 9px;">Marek Berith 2019
+<body style="font-family: monospace; background-color: black">
+	<h1 style = "font-family: monospace; color: white; text-align: center;"> Jumpy - interactive run and jump game </h1>
+	<canvas id = "theCanvas" style = "border: 2px solid #a9b3b4; margin: none;"> </canvas>
+	<footer style = "position: absolute; bottom: 1%; font-family: monospace; font-size: 9px; color: white;">Marek Berith 2019
 	</footer>
+	<button id="playAgain" class="classicButton" type="button" style="display: none; position: absolute;
+    top: 400px; left: 880px;">Hraj znovu</button>
+	<button id="backtoMenu" class="classicButton" type="button" style="display: none; position: absolute; top: 400px; left: 500px;">Vráť sa na menu</button>
+	<button id="newGame" class="classicButton" type="button" style="display: none; position: absolute; top: 400px; left: 713px;">Nová hra</button>
+	<button id="easy" class="classicButton" type="button" style="display: none; position: absolute; top: 500px; left: 300px;">Ľahká</button>
+	<button id="medium" class="classicButton" type="button" style="display: none; position: absolute; top: 500px; left: 500px;">Stredná</button>
+	<button id="hard" class="classicButton" type="button" style="display: none; position: absolute; top: 500px; left: 720px;">Ťažká</button>
+	<div id="enterName" style="display: none; position: absolute; top: 414px; left: 654px; z-index: 10;">
+		<input id="nameArray" type="text" name="playerName" style="padding-right: 390px; padding-bottom: 13px; font-size: 20px; border: 2px solid black; border-radius: 10px;">
+		<input id="submitName" type="submit" class="classicButton" value="Hraj" style="display: block; padding: 5px; background-color: #a9b3b4; border: none; border-radius: 5px;">
+	</div>
 </body>
 </html>
