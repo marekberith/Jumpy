@@ -14,12 +14,22 @@ class Game {
         this.canvas.width = 1104;		//changed from 960x540px
         this.canvas.height = 621;
         this.canvas.style.marginLeft = (window.innerWidth - canvas.width) / 2 + 'px';
+        this.mrgLeft = (window.innerWidth - canvas.width) / 2;
         this.gameOverScreen = new Image(this.canvas.width, this.canvas.height);
         this.gameOverScreen.src = 'graphics/gameover.jpg';
         this.way.setWays();
         this.component.generateClouds();
         this.score = 0;
         this.numberOfLifes = 3;
+    }
+    setDifficulty(difficulty)
+    {
+        if(difficulty === 1)
+            this.way.speed = 14;
+        else if(difficulty === 2)
+            this.way.speed = 17;
+        else if(difficulty === 3)
+            this.way.speed = 20;
     }
 
     start() {
@@ -86,6 +96,7 @@ class Game {
         this.component.generateClouds();
         this.score = 0;
         this.numberOfLifes = 3;
+        this.gameAudio.currentTime = 0;
     }
     checkGameOver()
     {

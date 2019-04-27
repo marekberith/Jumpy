@@ -20,9 +20,9 @@ window.onload = function()
             this.playAgain.removeAttribute('onclick');
             game.gameOverAudio.pause();
         }
+        console.log(menu.mrgLeft);
         menu.voiceEnabled = sound;
         menu.menuActive = 1;
-        console.log('Voice is' + menu.voiceEnabled);
         if(menu.voiceEnabled === true && (!(menu.gameAudio.onplaying)))
             menu.gameAudio.play();
         setTimeout(function ()
@@ -30,44 +30,25 @@ window.onload = function()
             menu.loadButtons();
             assets.activatemenuButtons();
         }, 60);
-        window.addEventListener("click", function ()
-        {
-            this.xcoordinate = event.clientX;
-            this.ycoordinate = event.clientY;
-            //alert(`${this.xcoordinate} ${this.ycoordinate} ${menu.menuActive}`);
-            if (menu.menuActive === 1 && this.ycoordinate < 659 && this.ycoordinate > 613 && this.xcoordinate > 250 && this.xcoordinate < 300)
-            {
-                menu.menuActive = 0;
-                menu.Settings();
-                assets.newGame.style.display = "none";
-            }
-        });
     };
     loadGame = function () {
+        menu.preloadscreenActive = 1;
         assets.newGame.style.display = "none";
         assets.newGame.removeAttribute('onclick');
         assets.activateForm();
         menu.ctx.drawImage(menu.playScreen, 0, 0, canvas.width, canvas.height);
-        assets.activateDifficulties();
+        menu.preloadScreen();
     };
 
     playaGame = function()
     {
         i = 0;
         menu.gameAudio.pause();
-        assets.newGame.style.display = "none";
-        assets.newGame.removeAttribute('onclick');
         assets.enterName.style.display = "none";
-        assets.enterName.removeAttribute('onsubmit');
-        assets.easy.style.display = "none";
-        assets.easy.removeAttribute('onclick');
-        assets.medium.style.display = "none";
-        assets.medium.removeAttribute('onclick');
-        assets.hard.style.display = "none";
-        assets.hard.removeAttribute('onclick');
+        assets.enterName.removeAttribute('onclick');
         canvas = document.getElementById('theCanvas');
-        if(menu.difficulty === 1)
-            game.way.speed = 100;
+        game.setVariables();
+        game.setDifficulty(menu.difficulty);
         running_on = setTimeout(
             function(){
                 game.gameAudio.play();
@@ -86,10 +67,8 @@ window.onload = function()
             game.ctx.fillText(`${game.score}`, canvas.width / 2 + 70, canvas.height / 2 + 143);
             game.ctx.closePath();
             this.position = chart.addPlayer(game.score, assets.playerName);
-            console.log(this.position);
             chart.printPosition(this.position);
             assets.activategameoverButtons();
-            // game.ctx.drawImage(assets.buttonsArr[0], canvas.width/2 - 250, canvas.height/2);
         };
     };
     functionHandler();

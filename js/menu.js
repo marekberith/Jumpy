@@ -6,6 +6,7 @@ class Menu
         this.canvas.width = 1104;		//changed from 960x540px
         this.canvas.height = 621;
         this.canvas.style.marginLeft = (window.innerWidth - canvas.width) / 2 + 'px';
+        this.mrgLeft = (window.innerWidth - canvas.width) / 2;
         this.loadonScreen = new Image();
         this.loadonScreen.src = 'graphics/main_menu.jpg';
         this.playScreen = new Image();
@@ -17,11 +18,15 @@ class Menu
         this.settingsScreen.src = 'graphics/nastavenia.jpg';
         this.controller = new Image();
         this.controller.src = 'graphics/controller.png';
+        this.controllerScreen = new Image();
+        this.controllerScreen.src = 'graphics/ovládanie.jpg';
         this.chart = new Image();
         this.chart.src = 'graphics/chart.png';
+        this.chartScreen = new Image();
+        this.chartScreen.src = 'graphics/rebricek.jpg';
         this.home = new Image();
         this.home.src = 'graphics/home.png';
-        this.difficulty = 0;
+        this.difficulty = 1;
         this.easy = new Image();
         this.easy.src = 'graphics/buttonlahka.png';
         this.medium = new Image();
@@ -34,6 +39,9 @@ class Menu
         this.offvoice.src = 'graphics/soundoff.png';
         this.menuActive = 0;
         this.settingsActive = 0;
+        this.preloadscreenActive = 0;
+        this.controllerActive = 0;
+        this.chartscreenActive = 0;
         this.voiceEnabled = true;
     }
     loadButtons()
@@ -46,6 +54,10 @@ class Menu
     }
     Settings()
     {
+        this.menuActive = 0;
+        this.preloadscreenActive = 0;
+        this.controllerActive = 0;
+        this.chartscreenActive = 0;
         this.settingsActive = 1;
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.drawImage(this.settingsScreen, 0, 0, this.canvas.width, this.canvas.height);
@@ -55,38 +67,49 @@ class Menu
         this.ctx.drawImage(this.hard, 595, 425);
         this.ctx.drawImage(this.onvoice, 170, 330, 100, 100);
         this.ctx.drawImage(this.offvoice, 250, 330, 100, 100);
-        window.addEventListener("click",function () {
-            this.xcoordinate = event.clientX;
-            this.ycoordinate = event.clientY;
-            console.log(this.xcoordinate, this.ycoordinate);
-            if(this.xcoordinate > 1258  && this.xcoordinate < 1314 && this.ycoordinate > 382 && this.ycoordinate < 436)
-            {
-                this.settingsActive = 0;
-                mainMenu(this.voiceEnabled);
-            }
-            else if(this.xcoordinate > 486 && this.xcoordinate < 624 && this.ycoordinate > 490 && this.ycoordinate < 550)
-            {
-                this.difficulty = 1;
-            }
-            else if(this.xcoordinate > 646 && this.xcoordinate < 799 && this.ycoordinate > 490 && this.ycoordinate < 550)
-            {
-                this.difficulty = 2;
-            }
-            else if(this.xcoordinate > 821 && this.xcoordinate < 958 && this.ycoordinate > 490 && this.ycoordinate < 550)
-            {
-                this.difficulty = 3;
-            }
-            else if(this.xcoordinate > 421 && this.xcoordinate < 470 && this.ycoordinate > 422 && this.ycoordinate < 468)
-            {
-                this.voiceEnabled = false;
-                console.log('Turning off sound');
-                this.gameAudio.pause();
-                menu.gameAudio.currentTime = 0;
-            }
-            else if(this.xcoordinate > 502 && this.xcoordinate < 549 && this.ycoordinate > 422 && this.ycoordinate < 468)
-            {
-                this.voiceEnabled = true;
-            }
-        });
+    }
+    Controller()
+    {
+        this.menuActive = 0;
+        this.settingsActive = 0;
+        this.preloadscreenActive = 0;
+        this.chartscreenActive = 0;
+        this.controllerActive = 1;
+        this.ctx.clearRect(0,0, this.canvas.width, this.canvas.height);
+        this.ctx.drawImage(this.controllerScreen, 0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.drawImage(this.home, this.canvas.width - 100, this.canvas.height - 75, 110, 55);
+    }
+    preloadScreen()
+    {
+        this.menuActive = 0;
+        this.controllerActive = 0;
+        this.settingsActive = 0;
+        this.chartscreenActive = 0;
+        this.preloadscreenActive = 1;
+        this.ctx.drawImage(this.easy, 280, 500);
+        this.ctx.drawImage(this.medium, 440, 500);
+        this.ctx.drawImage(this.hard, 615, 500);
+    }
+    Chart()
+    {
+        this.menuActive = 0;
+        this.preloadscreenActive = 0;
+        this.controllerActive = 0;
+        this.settingsActive = 0;
+        this.chartscreenActive = 1;
+        this.ctx.clearRect(0,0, this.canvas.width, this.canvas.height);
+        this.ctx.drawImage(this.chartScreen, 0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.drawImage(this.home, this.canvas.width - 100, this.canvas.height - 75, 110, 55);
+        this.ctx.beginPath();
+        this.ctx.font = "30px Monospace";
+        this.ctx.color = "#000000";
+        for(i = 0; i < 5; i++)
+        {
+            if(chart.playersArr[i][1] === undefined)
+                this.ctx.fillText(`Na ${i + 1}. mieste sa nenachádza žiaden hráč`, menu.mrgLeft + 15, 350 + i*40);
+            else
+                this.ctx.fillText(`${i + 1}. Hráč: ${chart.playersArr[i][1]} ${chart.playersArr[i][0]}`, menu.mrgLeft + 130, 350 + i*40);
+        }
+        this.ctx.closePath();
     }
 }
