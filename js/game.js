@@ -1,3 +1,4 @@
+let int;
 class Game {
     constructor(canvas) {
         this.jumpy = new Jumpy();
@@ -21,40 +22,73 @@ class Game {
         this.component.generateClouds();
         this.score = 0;
         this.numberOfLifes = 3;
+        this.endofgameState = 0;
     }
     setDifficulty(difficulty)
     {
+        console.log('Selected dif'+difficulty);
         if(difficulty === 1)
-            this.way.speed = 14;
+            this.way.speed = 13;
         else if(difficulty === 2)
-            this.way.speed = 17;
+        {
+            this.way.speed = 14;
+            this.way.elixirEnabled = true;
+        }
         else if(difficulty === 3)
-            this.way.speed = 20;
+            this.way.speed = 15;
+            this.way.elixirEnabled = true;
+    }
+
+    executeSelf()
+    {
+        i = 0;
+        menu.gameAudio.pause();
+        assets.enterName.style.display = "none";
+        assets.enterName.removeAttribute('onclick');
+        this.setVariables();
+        this.setDifficulty(menu.difficulty);
+        if(menu.voiceEnabled === true)
+        {
+            setTimeout(
+                function(){
+                    game.gameAudio.play();
+                },
+                60);
+        }
+        int = setInterval(() => console.log(this.start()), 1000/70);
+        //this.gameAudio.onpause = function(){game.endofGame()};
     }
 
     start() {
-        console.log(this.jumpy.posy, this.jumpy.movement);
+        this.endofgameState = 0;
+        console.log('Rýchlosť je: ' + this.way.speed);
         if(this.checkGameOver() === 1)
-            return;
+        {
+            clearInterval(int);
+            setTimeout(() => game.endofGame(), 50);
+        }
         if(this.way.potionActive === true)
             this.infected();
+        //console.log(performance.now());
         this.draw();
         this.way.increaseSpeed();
-        requestAnimationFrame(this.start.bind(this));
     }
 
     restart()
     {
         this.setVariables();
+        this.setDifficulty(menu.difficulty);
         assets.playAgain.style.display = "none";
         assets.backtoMenu.style.display = "none";
         assets.playAgain.removeAttribute('onclick');
         assets.backtoMenu.removeAttribute('onclick');
-        this.gameOverAudio.pause();
+        if(menu.voiceEnabled === true)
+            this.gameOverAudio.pause();
         this.gameOverAudio.currentTime = 0;
         this.gameAudio.currentTime = 0;
-        this.gameAudio.play();
-        this.start();
+        if(menu.voiceEnabled === true)
+            this.gameAudio.play();
+        int = setInterval(() => console.log(this.start()), 1000/70);
     }
 
     setVariables()      //this function starts only when restarting game !
@@ -70,12 +104,13 @@ class Game {
         this.jumpy.lookSet = 0;
         this.jumpy.lookSetSpeed = 10;
         this.bck.lookSet = 0;
-        this.way.speed = 14;
+        this.way.speed = 13;
         this.way.potionSpeed = 0;
         this.way.potionSet = false;
-        this.way.onloadSpeed = 14;
+        this.way.onloadSpeed = 13;
         this.way.potionActive = false;
         this.way.depression = false;
+        this.way.endofgameState = 0;
         for(let j = 0; j < 7; j++)
         {
             for(let k = 0; k < 5; k++)
@@ -117,7 +152,8 @@ class Game {
                         this.gameAudio.pause();
                         return 1;
                     }
-                    this.gameMiss.play();
+                    if(menu.voiceEnabled === true)
+                        this.gameMiss.play();
                     break;
                 }
                 if( this.way.actualWay[j][3] >= 0 && this.way.actualWay[j][3] <= 4 &&   //ak je prekazka
@@ -132,7 +168,8 @@ class Game {
                         this.gameAudio.pause();
                         return 1;
                     }
-                    this.gameMiss.play();
+                    if(menu.voiceEnabled === true)
+                        this.gameMiss.play();
                     break;
                 }
             }
@@ -141,6 +178,25 @@ class Game {
             if (isObstacle === 0 && this.way.obstcl === true)
                 this.way.obstcl = false;
         }
+    }
+
+    endofGame()
+    {
+        this.endofgameState = 1;
+        this.score = i;
+        if(menu.voiceEnabled === true)
+            this.gameOverAudio.play();
+        this.ctx.clearRect(0, 0, canvas.width, canvas.height);
+        this.ctx.drawImage(this.gameOverScreen, 0, 0, canvas.width, canvas.height);
+        this.ctx.beginPath();
+        this.ctx.font = "33px Monospace";
+        this.ctx.fillStyle = "#7b8586";
+        this.ctx.fontWeight = "bold";
+        this.ctx.fillText(`${this.score}`, canvas.width / 2 + 70, canvas.height / 2 + 143);
+        this.ctx.closePath();
+        this.position = chart.addPlayer(this.score, assets.playerName);
+        chart.printPosition(this.position);
+        assets.activategameoverButtons();
     }
 
     infected()
@@ -192,6 +248,7 @@ class Game {
     }
     drawWay()
     {
+        //this.ctx.drawImage(this.obstacle.obstacle_arr[6], 200, 200, 100, 100);
         for (let j = 0; j < 7; j++) {
             this.ctx.drawImage(this.way.way_arr[this.way.actualWay[j][0]], this.way.actualWay[j][1], this.way.actualWay[j][2], 192, 132);      //vykreslovanie cesty
             if(this.way.actualWay[j][3] >= 0 && this.way.actualWay[j][3] <= 5)                      //vykreslovanie prekazok
@@ -205,7 +262,8 @@ class Game {
         if(this.way.actualWay[6][1] < -192)
             this.way.checkWays(this.returnNumber(), this.component.potionPosX, this.component.potionActive);
         this.way.moveWays();
-        this.way.checkPotion(this.jumpy.posx, this.jumpy.movement);
+        if(this.way.elixirEnabled === true)
+            this.way.checkPotion(this.jumpy.posx, this.jumpy.movement);
     }
 
     drawJumpy() {

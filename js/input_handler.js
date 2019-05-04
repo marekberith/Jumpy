@@ -1,5 +1,5 @@
 window.addEventListener("keydown", function () {
-    if (game !== undefined) {
+    if (game !== undefined && game.endofgameState === 0) {
         let key = event.keyCode;
         if (key === 32) {
             if (game.jumpy.jump === false && game.jumpy.posy + game.jumpy.movement === 250 && game.jumpy.velUp === (26 + game.jumpy.distance100)) {

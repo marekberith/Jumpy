@@ -98,6 +98,7 @@ class Way
 		this.potionActive = false;
 		this.depression = false;
 		this.obstcl = false;
+		this.elixirEnabled = false;
 		for(let j = 0; j < 7; j++)
 			this.actualWay[j] = new Array(4);
 	}
@@ -131,16 +132,19 @@ class Way
 		this.actualWay[0][1] = this.actualWay[1][1] + 192;
 		this.actualWay[0][2] = canvas.height - 132;
 		//console.log(this.actualWay[0][2]);
-		if(this.actualWay[0][0] !== 2 && this.actualWay[1][3] === undefined && this.actualWay[2][3] === undefined)
+		if(this.elixirEnabled === true)
 		{
-			if(Math.round(Math.random()) === 1)
-				if(	this.actualWay[1][3] === undefined 										//prekazka nesmie nasledovat
-					&& (this.actualWay[1][0] !== 2 && this.actualWay[2][3] === undefined)	//nesmie nasledovat priepast a prekazka
-					&& (this.actualWay[2][0] !== 2))
-					if(this.potionSet === false)
-						this.actualWay[0][3] = Math.floor(Math.random() * (6));
-					else
-						this.actualWay[0][3] = Math.floor(Math.random() * (5));
+			if(this.actualWay[0][0] !== 2 && this.actualWay[1][3] === undefined && this.actualWay[2][3] === undefined)
+			{
+				if(Math.round(Math.random()) === 1)
+					if(	this.actualWay[1][3] === undefined 										//prekazka nesmie nasledovat
+						&& (this.actualWay[1][0] !== 2 && this.actualWay[2][3] === undefined)	//nesmie nasledovat priepast a prekazka
+						&& (this.actualWay[2][0] !== 2))
+						if(this.potionSet === false)
+							this.actualWay[0][3] = Math.floor(Math.random() * (6));
+						else
+							this.actualWay[0][3] = Math.floor(Math.random() * (5));
+			}
 		}
 	}
 	checkPotion(posy, movement)
@@ -167,7 +171,7 @@ class Way
 		i+= 0.5;
 		if(i % 200 === 0)
 		{
-			this.speed += this.onloadSpeed * 0.025;
+			this.speed += this.onloadSpeed * 0.05;
 		}
 	}
 }
@@ -175,13 +179,14 @@ class Way
 class Obstacle
 {
 	constructor() {
-		this.obstacle_arr = [new Image(), new Image(), new Image(), new Image(), new Image(), new Image()];
+		this.obstacle_arr = [new Image(), new Image(), new Image(), new Image(), new Image(), new Image(), new Image()];
 		this.obstacle_arr[0].src = 'graphics/kamen.png';
 		this.obstacle_arr[1].src = 'graphics/kamen2.png';
 		this.obstacle_arr[2].src = 'graphics/kamen_sneh.png';
 		this.obstacle_arr[3].src = 'graphics/kamen_sneh2.png';
 		this.obstacle_arr[4].src = 'graphics/obstacle.png';
 		this.obstacle_arr[5].src = 'graphics/potion.png';
+		//this.obstacle_arr[6].src = 'graphics/fire.png';
 	}
 }
 

@@ -44,6 +44,23 @@ class Menu
         this.chartscreenActive = 0;
         this.voiceEnabled = true;
     }
+    checkifPlayed()
+    {
+        if (i > 0)
+        {
+            console.log('mazem');
+            assets.backtoMenu.style.display = "none";
+            assets.backtoMenu.removeAttribute('onclick');
+            assets.playAgain.style.display = "none";
+            assets.playAgain.removeAttribute('onclick');
+            game.gameOverAudio.pause();
+        }
+    }
+    playSound()
+    {
+        if(this.voiceEnabled === true)
+            this.gameAudio.play();
+    }
     loadButtons()
     {
         this.ctx.clearRect(0,0, canvas.width, canvas.height);

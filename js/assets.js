@@ -19,8 +19,8 @@ class Assets
         this.backtoMenu.style.display = "initial";
         this.playagainAction = document.createAttribute("onclick");
         this.backtoMenuAction = document.createAttribute("onclick");
-        this.playagainAction.value = "game.restart();assets.mouseClick.play();";
-        this.backtoMenuAction.value = "mainMenu();assets.mouseClick.play();menu.difficulty = 1;";
+        this.playagainAction.value = "game.endofgameState = 0; game.restart();assets.clickaButton();";
+        this.backtoMenuAction.value = "mainMenu(menu.voiceEnabled);assets.clickaButton();menu.difficulty = 1; menu.gameAudio.currentTime = 0;";
         this.playAgain.setAttributeNode(this.playagainAction);
         this.backtoMenu.setAttributeNode(this.backtoMenuAction);
     }
@@ -28,7 +28,7 @@ class Assets
     {
         this.newGame.style.display = "initial";
         this.newgameAction = document.createAttribute("onclick");
-        this.newgameAction.value = "loadGame();assets.mouseClick.play();menu.menuActive = 0;";
+        this.newgameAction.value = "loadGame();assets.clickaButton();menu.menuActive = 0;";
         this.newGame.setAttributeNode(this.newgameAction);
     }
     activateForm()
@@ -38,17 +38,22 @@ class Assets
         this.submitNameAction.value = "assets.saveName();";
         this.submitName.setAttributeNode(this.submitNameAction);
     }
+    clickaButton()
+    {
+        if(menu.voiceEnabled === true)
+            assets.mouseClick.play();
+    }
     saveName()
     {
         this.playerName = document.getElementById('nameArray').value;
         if(this.playerName.length > 0)
         {
-            this.mouseClick.play();
+            this.clickaButton();
             playaGame();
         }
         else
         {
-            this.mouseClick.play();
+            this.clickaButton();
             alert('Error');
         }
     }
