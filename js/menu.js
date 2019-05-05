@@ -48,7 +48,6 @@ class Menu
     {
         if (i > 0)
         {
-            console.log('mazem');
             assets.backtoMenu.style.display = "none";
             assets.backtoMenu.removeAttribute('onclick');
             assets.playAgain.style.display = "none";
@@ -98,6 +97,7 @@ class Menu
     }
     preloadScreen()
     {
+        this.ctx.drawImage(this.playScreen, 0, 0, this.canvas.width, this.canvas.height);
         this.menuActive = 0;
         this.controllerActive = 0;
         this.settingsActive = 0;

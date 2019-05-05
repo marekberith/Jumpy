@@ -54,7 +54,7 @@ class Assets
         else
         {
             this.clickaButton();
-            alert('Error');
+            alert('Nezadali ste svoje meno');
         }
     }
 }

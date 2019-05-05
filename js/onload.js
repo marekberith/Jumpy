@@ -27,14 +27,11 @@ window.onload = function()
         assets.newGame.style.display = "none";
         assets.newGame.removeAttribute('onclick');
         assets.activateForm();
-        menu.ctx.drawImage(menu.playScreen, 0, 0, canvas.width, canvas.height);
         menu.preloadScreen();
+    };
+    playaGame = function(){
+        game.executeSelf();
     };
     functionHandler();
 };
 
-playaGame = function()
-{
-    game.executeSelf();
-    console.log('executed');
-};

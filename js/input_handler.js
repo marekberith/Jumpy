@@ -5,8 +5,6 @@ window.addEventListener("keydown", function () {
             if (game.jumpy.jump === false && game.jumpy.posy + game.jumpy.movement === 250 && game.jumpy.velUp === (26 + game.jumpy.distance100)) {
                 console.log('Pociatocna pozicia je:' + game.jumpy.posy + ' vyska canvasu' + canvas.height);
                 game.jumpy.jump = true;
-                //console.log(game.jumpy.posy);
-                //console.log('Space');
             }
         }
     }
@@ -14,9 +12,6 @@ window.addEventListener("keydown", function () {
 window.addEventListener("click", function () {
     this.xcoordinate = event.clientX;
     this.ycoordinate = event.clientY;
-    //alert(`${this.xcoordinate} ${this.ycoordinate} ${menu.mrgLeft}`);
-    //console.log(menu.menuActive + ' ' + this.xcoordinate + ' ' + this.ycoordinate + ' ' + menu.mrgLeft);
-    console.log(menu.chartscreenActive);
     if (menu.menuActive === 1 && this.ycoordinate < 659 && this.ycoordinate > 613 && (this.xcoordinate > (34 + menu.mrgLeft)) && (this.xcoordinate < (84 + menu.mrgLeft)))
     {
         menu.menuActive = 0;
@@ -39,7 +34,6 @@ window.addEventListener("click", function () {
     {
         this.xcoordinate = event.clientX;
         this.ycoordinate = event.clientY;
-        console.log(this.xcoordinate, this.ycoordinate);
         if (this.xcoordinate > 1042 + menu.mrgLeft && this.xcoordinate < 1098 + menu.mrgLeft && this.ycoordinate > 611 && this.ycoordinate < 665)
         {
             menu.settingsActive = 0;

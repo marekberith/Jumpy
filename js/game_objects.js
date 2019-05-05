@@ -67,7 +67,7 @@ class Background
 	constructor(){
 		this.background_layer = [new Image(), new Image()];
 		this.background_layer[0].src = 'graphics/basic_layer_lgh.png';
-		this.background_layer[1].src = 'graphics/basic_layer_dark_a.png';
+		this.background_layer[1].src = 'graphics/basic_layer_dark.png';
 		this.lookSet = 0;
 	}
 	backgroundSwitch()
@@ -186,7 +186,29 @@ class Obstacle
 		this.obstacle_arr[3].src = 'graphics/kamen_sneh2.png';
 		this.obstacle_arr[4].src = 'graphics/obstacle.png';
 		this.obstacle_arr[5].src = 'graphics/potion.png';
-		//this.obstacle_arr[6].src = 'graphics/fire.png';
+		this.obstacle_arr[6].src = 'graphics/fire.png';
+		this.molotovposx = canvas.width;
+		this.molotovposy = 440;
+		this.molotovEnabled = false;
+		this.activeMolotov = false;
+		this.activemolotovSound = new Audio('sound/molotovsound.mp3');
+	}
+	generateMolotov()
+	{
+		if(this.activeMolotov === false && i % 200 === 0 && i !== 0)
+		{
+			if(menu.voiceEnabled === true)
+				this.activemolotovSound.play();
+			this.activeMolotov = true;
+			this.molotovposx = game.canvas.width;
+			this.molotovposy = 440;
+		}
+		if(this.activeMolotov === true)
+		{
+			this.molotovposx -= 25;
+			if(this.molotovposx < 0)
+				this.activeMolotov = false;
+		}
 	}
 }
 

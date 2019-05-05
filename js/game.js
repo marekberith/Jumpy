@@ -1,4 +1,4 @@
-let int;
+let int;                //pozn. nastaviť vstupné pole na window size, pretvoriť do funkcií v onload
 class Game {
     constructor(canvas) {
         this.jumpy = new Jumpy();
@@ -24,20 +24,6 @@ class Game {
         this.numberOfLifes = 3;
         this.endofgameState = 0;
     }
-    setDifficulty(difficulty)
-    {
-        console.log('Selected dif'+difficulty);
-        if(difficulty === 1)
-            this.way.speed = 13;
-        else if(difficulty === 2)
-        {
-            this.way.speed = 14;
-            this.way.elixirEnabled = true;
-        }
-        else if(difficulty === 3)
-            this.way.speed = 15;
-            this.way.elixirEnabled = true;
-    }
 
     executeSelf()
     {
@@ -55,13 +41,11 @@ class Game {
                 },
                 60);
         }
-        int = setInterval(() => console.log(this.start()), 1000/70);
-        //this.gameAudio.onpause = function(){game.endofGame()};
+        int = setInterval(() => console.log(this.start()), 1000/65);
     }
 
     start() {
         this.endofgameState = 0;
-        console.log('Rýchlosť je: ' + this.way.speed);
         if(this.checkGameOver() === 1)
         {
             clearInterval(int);
@@ -69,7 +53,6 @@ class Game {
         }
         if(this.way.potionActive === true)
             this.infected();
-        //console.log(performance.now());
         this.draw();
         this.way.increaseSpeed();
     }
@@ -88,7 +71,7 @@ class Game {
         this.gameAudio.currentTime = 0;
         if(menu.voiceEnabled === true)
             this.gameAudio.play();
-        int = setInterval(() => console.log(this.start()), 1000/70);
+        int = setInterval(() => console.log(this.start()), 1000/65);
     }
 
     setVariables()      //this function starts only when restarting game !
@@ -111,6 +94,10 @@ class Game {
         this.way.potionActive = false;
         this.way.depression = false;
         this.way.endofgameState = 0;
+        this.obstacle.molotovposx = canvas.width;
+        this.obstacle.molotovposy = 440;
+        this.obstacle.molotovEnabled = false;
+        this.obstacle.activeMolotov = false;
         for(let j = 0; j < 7; j++)
         {
             for(let k = 0; k < 5; k++)
@@ -133,6 +120,24 @@ class Game {
         this.numberOfLifes = 3;
         this.gameAudio.currentTime = 0;
     }
+
+    setDifficulty(difficulty)
+    {
+        if(difficulty === 1)
+            this.way.speed = 13;
+        else if(difficulty === 2)
+        {
+            this.way.speed = 14;
+            this.way.elixirEnabled = true;
+        }
+        else if(difficulty === 3)
+        {
+            this.way.speed = 15;
+            this.way.elixirEnabled = true;
+            this.obstacle.molotovEnabled = true;
+        }
+    }
+
     checkGameOver()
     {
         let isDepression = 0;
@@ -165,12 +170,21 @@ class Game {
                     this.numberOfLifes--;
                     if(this.numberOfLifes === 0)
                     {
-                        this.gameAudio.pause();
+                        if(menu.voiceEnabled === true)
+                            this.gameAudio.pause();
                         return 1;
                     }
                     if(menu.voiceEnabled === true)
                         this.gameMiss.play();
                     break;
+                }
+                if( this.obstacle.activeMolotov === true && this.obstacle.molotovposx > 101 && this.obstacle.molotovposx <= 135 &&
+                    (this.jumpy.posy + this.jumpy.movement) > 225)
+                {
+                    if(menu.voiceEnabled === true)
+                        this.gameAudio.pause();
+                    this.numberOfLifes = 0;
+                    return 1;
                 }
             }
             if (isDepression === 0 && this.way.depression === true)
@@ -248,7 +262,6 @@ class Game {
     }
     drawWay()
     {
-        //this.ctx.drawImage(this.obstacle.obstacle_arr[6], 200, 200, 100, 100);
         for (let j = 0; j < 7; j++) {
             this.ctx.drawImage(this.way.way_arr[this.way.actualWay[j][0]], this.way.actualWay[j][1], this.way.actualWay[j][2], 192, 132);      //vykreslovanie cesty
             if(this.way.actualWay[j][3] >= 0 && this.way.actualWay[j][3] <= 5)                      //vykreslovanie prekazok
@@ -264,6 +277,14 @@ class Game {
         this.way.moveWays();
         if(this.way.elixirEnabled === true)
             this.way.checkPotion(this.jumpy.posx, this.jumpy.movement);
+        if(this.obstacle.molotovEnabled === true)
+        {
+            this.obstacle.generateMolotov();
+            if (this.obstacle.activeMolotov === true)
+            {
+                this.ctx.drawImage(this.obstacle.obstacle_arr[6], this.obstacle.molotovposx, 440, 50, 50);
+            }
+        }
     }
 
     drawJumpy() {

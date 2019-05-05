@@ -26,7 +26,6 @@ class Chart
     }
     printPosition(position)
     {
-        console.log(position);
         game.ctx.fillText(`${position + 1}`, canvas.width / 2 + 170, canvas.height / 2 + 193);
     }
 }
