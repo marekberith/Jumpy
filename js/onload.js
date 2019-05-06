@@ -30,7 +30,7 @@ window.onload = function()
         menu.preloadScreen();
     };
     playaGame = function(){
-        game.executeSelf();
+        game.execute();
     };
     functionHandler();
 };

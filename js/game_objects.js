@@ -16,6 +16,7 @@ class Jumpy {
 		this.look[2].src = 'graphics/Jumpy_jumping_r_a.png';
 		this.lookSet = 0;
 		this.lookSetSpeed = 10;
+		this.resistance = false;
 	}
 	checkJump()
 	{
@@ -96,6 +97,7 @@ class Way
 		this.potionSet = false;
 		this.onloadSpeed = 14;
 		this.potionActive = false;
+		this.potionType = 0;
 		this.depression = false;
 		this.obstcl = false;
 		this.elixirEnabled = false;
@@ -141,7 +143,7 @@ class Way
 						&& (this.actualWay[1][0] !== 2 && this.actualWay[2][3] === undefined)	//nesmie nasledovat priepast a prekazka
 						&& (this.actualWay[2][0] !== 2))
 						if(this.potionSet === false)
-							this.actualWay[0][3] = Math.floor(Math.random() * (6));
+							this.actualWay[0][3] = Math.floor(Math.random() * (8));
 						else
 							this.actualWay[0][3] = Math.floor(Math.random() * (5));
 			}
@@ -153,14 +155,20 @@ class Way
 		{
 			for(let j = 0; j < 7; j++)
 			{
-				if (this.actualWay[j][3] === 5) {
+				if (this.actualWay[j][3] >= 5 && this.actualWay[j][3] <= 7) {
 					if (this.actualWay[j][1] > 88 &&	//kontrola pozicie x
 						this.actualWay[j][1] < 112 &&
 						(posy + movement > posy + 100 - 48))	//kontrola pozicie y
 					{
 						this.potionActive = true;
 						this.potionSet = true;
-						console.log('hit');
+						if(this.actualWay[j][3] === 5)
+							this.potionType = 0;
+						else if(this.actualWay[j][3] === 6)
+							this.potionType = 1;
+						else if(this.actualWay[j][3] === 7)
+							this.potionType = 2;
+						//console.log('hit');
 					}
 				}
 			}
@@ -179,14 +187,16 @@ class Way
 class Obstacle
 {
 	constructor() {
-		this.obstacle_arr = [new Image(), new Image(), new Image(), new Image(), new Image(), new Image(), new Image()];
+		this.obstacle_arr = [new Image(), new Image(), new Image(), new Image(), new Image(), new Image(), new Image(), new Image(), new Image()];
 		this.obstacle_arr[0].src = 'graphics/kamen.png';
 		this.obstacle_arr[1].src = 'graphics/kamen2.png';
 		this.obstacle_arr[2].src = 'graphics/kamen_sneh.png';
 		this.obstacle_arr[3].src = 'graphics/kamen_sneh2.png';
 		this.obstacle_arr[4].src = 'graphics/obstacle.png';
 		this.obstacle_arr[5].src = 'graphics/potion.png';
-		this.obstacle_arr[6].src = 'graphics/fire.png';
+		this.obstacle_arr[6].src = 'graphics/timesaver.png';
+		this.obstacle_arr[7].src = 'graphics/unbeatable.png';
+		this.obstacle_arr[8].src = 'graphics/fire.png';
 		this.molotovposx = canvas.width;
 		this.molotovposy = 440;
 		this.molotovEnabled = false;
@@ -277,5 +287,8 @@ class Instruction
 		this.instruction_arr[2] = "Bež tak, aby si sa nezranil !";
 		this.instruction_arr[3] = "Zase budeš posledný !";
 		this.instruction_arr[4] = "Keď sa neotráviš, daľej zabežíš !";
+		this.instruction_arr[5] = "Keď nevládzeš, vypi modrú fľaštičku !";
+		this.instruction_arr[6] = "Červený elixír ti dodá neporaziteľnosť !";
+		this.instruction_arr[7] = "Takýmto behom zbytočne strácaš čas !";
 	}
 }

@@ -1,9 +1,8 @@
 window.addEventListener("keydown", function () {
-    if (game !== undefined && game.endofgameState === 0) {
+    if (game !== undefined && game.endofgameState === 0 && game.gamePaused === 0) {
         let key = event.keyCode;
         if (key === 32) {
             if (game.jumpy.jump === false && game.jumpy.posy + game.jumpy.movement === 250 && game.jumpy.velUp === (26 + game.jumpy.distance100)) {
-                console.log('Pociatocna pozicia je:' + game.jumpy.posy + ' vyska canvasu' + canvas.height);
                 game.jumpy.jump = true;
             }
         }
@@ -12,6 +11,25 @@ window.addEventListener("keydown", function () {
 window.addEventListener("click", function () {
     this.xcoordinate = event.clientX;
     this.ycoordinate = event.clientY;
+    if(game.endofgameState === 0)
+    {
+        if(game.gamePaused === 0)
+        {
+            //alert(this.xcoordinate + ' ' + this.ycoordinate + ' ' + menu.mrgLeft);
+            if (this.xcoordinate > (1028 + menu.mrgLeft) && this.xcoordinate < (1087 + menu.mrgLeft) && this.ycoordinate > 61 && this.ycoordinate < 119)
+            {
+                game.pause();
+            }
+        }
+        else if(game.gamePaused === 1)
+        {
+            if (this.xcoordinate > (1028 + menu.mrgLeft) && this.xcoordinate < (1087 + menu.mrgLeft) && this.ycoordinate > 61 && this.ycoordinate < 119)
+            {
+                game.gamePaused = 0;
+                int = setInterval(() => game.start(), 1000/65);
+            }
+        }
+    }
     if (menu.menuActive === 1 && this.ycoordinate < 659 && this.ycoordinate > 613 && (this.xcoordinate > (34 + menu.mrgLeft)) && (this.xcoordinate < (84 + menu.mrgLeft)))
     {
         menu.menuActive = 0;
@@ -28,6 +46,12 @@ window.addEventListener("click", function () {
     {
         menu.menuActive = 0;
         menu.Chart();
+        assets.newGame.style.display = "none";
+    }
+    if (menu.menuActive === 1 && this.ycoordinate < 646 && this.ycoordinate > 597 && (this.xcoordinate > 1022 + menu.mrgLeft) && (this.xcoordinate < 1071 + menu.mrgLeft))
+    {
+        menu.menuActive = 0;
+        menu.Instructions();
         assets.newGame.style.display = "none";
     }
     else if (menu.menuActive === 0 && menu.settingsActive === 1)
@@ -99,6 +123,14 @@ window.addEventListener("click", function () {
         if (this.xcoordinate > 1042 + menu.mrgLeft && this.xcoordinate < 1098 + menu.mrgLeft && this.ycoordinate > 611 && this.ycoordinate < 665)
         {
             menu.chartscreenActive = 0;
+            mainMenu(menu.voiceEnabled);
+        }
+    }
+    else if(menu.infoActive === 1)
+    {
+        if (this.xcoordinate > 1042 + menu.mrgLeft && this.xcoordinate < 1098 + menu.mrgLeft && this.ycoordinate > 611 && this.ycoordinate < 665)
+        {
+            menu.infoActive = 0;
             mainMenu(menu.voiceEnabled);
         }
     }

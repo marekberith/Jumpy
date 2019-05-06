@@ -18,14 +18,21 @@ class Game {
         this.mrgLeft = (window.innerWidth - canvas.width) / 2;
         this.gameOverScreen = new Image(this.canvas.width, this.canvas.height);
         this.gameOverScreen.src = 'graphics/gameover.jpg';
+        this.pauseButton = new Image();
+        this.pauseButton.src = 'graphics/pause.png';
+        this.playButton = new Image();
+        this.playButton.src = 'graphics/play.png';
+        this.mask = new Image();
+        this.mask.src = 'graphics/mask.png';
         this.way.setWays();
         this.component.generateClouds();
         this.score = 0;
         this.numberOfLifes = 3;
-        this.endofgameState = 0;
+        this.endofgameState = 1;
+        this.gamePaused = 0;
     }
 
-    executeSelf()
+    execute()
     {
         i = 0;
         menu.gameAudio.pause();
@@ -41,10 +48,11 @@ class Game {
                 },
                 60);
         }
-        int = setInterval(() => console.log(this.start()), 1000/65);
+        int = setInterval(() => this.start(), 1000/65);
     }
 
     start() {
+        game.gamePaused = 0;
         this.endofgameState = 0;
         if(this.checkGameOver() === 1)
         {
@@ -59,6 +67,7 @@ class Game {
 
     restart()
     {
+        game.gamePaused = 0;
         this.setVariables();
         this.setDifficulty(menu.difficulty);
         assets.playAgain.style.display = "none";
@@ -71,7 +80,15 @@ class Game {
         this.gameAudio.currentTime = 0;
         if(menu.voiceEnabled === true)
             this.gameAudio.play();
-        int = setInterval(() => console.log(this.start()), 1000/65);
+        int = setInterval(() => this.start(), 1000/65);
+    }
+
+    pause()
+    {
+        this.gamePaused = 1;
+        clearInterval(int);
+        this.ctx.drawImage(this.mask, 0, 0, 1104, 621);
+        this.ctx.drawImage(this.playButton, 995, 10, 120, 60);
     }
 
     setVariables()      //this function starts only when restarting game !
@@ -86,6 +103,7 @@ class Game {
         this.jumpy.jump = true;
         this.jumpy.lookSet = 0;
         this.jumpy.lookSetSpeed = 10;
+        this.jumpy.resistance = false;
         this.bck.lookSet = 0;
         this.way.speed = 13;
         this.way.potionSpeed = 0;
@@ -98,6 +116,7 @@ class Game {
         this.obstacle.molotovposy = 440;
         this.obstacle.molotovEnabled = false;
         this.obstacle.activeMolotov = false;
+        this.way.elixirEnabled = false;
         for(let j = 0; j < 7; j++)
         {
             for(let k = 0; k < 5; k++)
@@ -145,7 +164,7 @@ class Game {
         if(i % 1 !== 0.5) {
             for (let j = 0; j < 7; j++)
             {
-                if (this.way.actualWay[j][0] === 2 && Math.floor(this.way.actualWay[j][1]) < 100 &&
+                if (this.jumpy.resistance === false && this.way.actualWay[j][0] === 2 && Math.floor(this.way.actualWay[j][1]) < 100 &&
                     Math.floor(this.way.actualWay[j][1]) > 60 && (this.jumpy.posy + this.jumpy.movement - 100 === this.jumpy.onloadposy) &&
                     this.way.depression === false)
                 {
@@ -161,7 +180,7 @@ class Game {
                         this.gameMiss.play();
                     break;
                 }
-                if( this.way.actualWay[j][3] >= 0 && this.way.actualWay[j][3] <= 4 &&   //ak je prekazka
+                if( this.jumpy.resistance === false && this.way.actualWay[j][3] >= 0 && this.way.actualWay[j][3] <= 4 &&   //ak je prekazka
                     (Math.floor(this.way.actualWay[j][1]) < 100 && Math.floor(this.way.actualWay[j][1]) > 60) && //a zaroven je na x-pozicii Jumpyho
                     this.jumpy.posy + this.jumpy.movement > this.jumpy.posy + 100 - 68 && this.way.obstcl === false)//a zaroven Jumpy vyssie ako prekazka
                 {
@@ -178,7 +197,7 @@ class Game {
                         this.gameMiss.play();
                     break;
                 }
-                if( this.obstacle.activeMolotov === true && this.obstacle.molotovposx > 101 && this.obstacle.molotovposx <= 135 &&
+                if( this.jumpy.resistance === false && this.obstacle.activeMolotov === true && this.obstacle.molotovposx > 101 && this.obstacle.molotovposx <= 135 &&
                     (this.jumpy.posy + this.jumpy.movement) > 225)
                 {
                     if(menu.voiceEnabled === true)
@@ -199,7 +218,10 @@ class Game {
         this.endofgameState = 1;
         this.score = i;
         if(menu.voiceEnabled === true)
+        {
+            this.gameOverAudio.currentTime = 0;
             this.gameOverAudio.play();
+        }
         this.ctx.clearRect(0, 0, canvas.width, canvas.height);
         this.ctx.drawImage(this.gameOverScreen, 0, 0, canvas.width, canvas.height);
         this.ctx.beginPath();
@@ -216,12 +238,18 @@ class Game {
     infected()
     {
         this.way.potionActive = false;
-        this.way.potionSpeed = this.way.speed * 0.25;
+        if(this.way.potionType === 0)
+            this.way.potionSpeed = this.way.speed * 0.25;
+        else if(this.way.potionType === 1)
+            this.way.potionSpeed = -(this.way.speed * 0.25);
+        else if(this.way.potionType === 2)
+            this.jumpy.resistance = true;
         setTimeout(() => this.disableInfection(), 3000);
     }
 
     disableInfection(){
         this.way.potionSpeed = 0;
+        this.jumpy.resistance = false;
         this.way.potionSet = false;
     }
 
@@ -232,6 +260,7 @@ class Game {
         this.drawJumpy();           //kontroluje výskok, zmenu Jumpyho, vykresľuje Jumpyho
         this.drawPanel();           //vykresľuje spodný panel
         this.writeMotivation();
+        this.drawPause();
     }
 
     drawPanel() {
@@ -246,7 +275,21 @@ class Game {
             this.ctx.beginPath();
             this.ctx.font = "20px Monospace";
             this.ctx.fillStyle = "#ffffff";
-            this.ctx.fillText(`Si nakazený ! 3 sekundy bežíš rýchlejšie`, this.canvas.width/2 - 200, this.canvas.height - 5);
+            if(this.way.potionType === 0)
+            {
+                this.ctx.font = "20px Monospace";
+                this.ctx.fillText(`Si nakazený ! 3 sekundy bežíš rýchlejšie`, this.canvas.width / 2 - 200, this.canvas.height - 5);
+            }
+            else if(this.way.potionType === 1)
+            {
+                this.ctx.font = "15px Monospace";
+                this.ctx.fillText(`Objavil si superschopnosť Jumpyho ! 3 sekundy bežíš pomalšie`, this.canvas.width / 2 - 266, this.canvas.height - 5);
+            }
+            else if(this.way.potionType === 2)
+            {
+                this.ctx.font = "20px Monospace";
+                this.ctx.fillText(`Aký silák ! 3 sekundy si nezničiteľný`, this.canvas.width / 2 - 230, this.canvas.height - 5);
+            }
             this.ctx.closePath();
         }
         this.ctx.beginPath();
@@ -254,6 +297,11 @@ class Game {
         this.ctx.fillStyle = "#ffffff";
         this.ctx.fillText(`${this.score} metrov`, 900, this.canvas.height - 5);
         this.ctx.closePath();
+    }
+
+    drawPause()
+    {
+        this.ctx.drawImage(this.pauseButton, 995, 10, 120, 60);
     }
 
     drawBackground() {
@@ -264,9 +312,9 @@ class Game {
     {
         for (let j = 0; j < 7; j++) {
             this.ctx.drawImage(this.way.way_arr[this.way.actualWay[j][0]], this.way.actualWay[j][1], this.way.actualWay[j][2], 192, 132);      //vykreslovanie cesty
-            if(this.way.actualWay[j][3] >= 0 && this.way.actualWay[j][3] <= 5)                      //vykreslovanie prekazok
+            if(this.way.actualWay[j][3] >= 0 && this.way.actualWay[j][3] <= 7)                      //vykreslovanie prekazok
             {
-                if(this.way.actualWay[j][3] === 5)
+                if(this.way.actualWay[j][3] >= 5 && this.way.actualWay[j][3] <= 7)
                     this.ctx.drawImage(this.obstacle.obstacle_arr[this.way.actualWay[j][3]], this.way.actualWay[j][1], this.way.actualWay[j][2] - 53, 48, 48);
                 else
                     this.ctx.drawImage(this.obstacle.obstacle_arr[this.way.actualWay[j][3]], this.way.actualWay[j][1], this.way.actualWay[j][2] - 53, 90, 68);
@@ -282,7 +330,7 @@ class Game {
             this.obstacle.generateMolotov();
             if (this.obstacle.activeMolotov === true)
             {
-                this.ctx.drawImage(this.obstacle.obstacle_arr[6], this.obstacle.molotovposx, 440, 50, 50);
+                this.ctx.drawImage(this.obstacle.obstacle_arr[8], this.obstacle.molotovposx, 440, 50, 50);
             }
         }
     }
@@ -313,14 +361,14 @@ class Game {
             if(i % 200 === 0)
             {
                 this.instruction.motivationSet = true;
-                this.instruction.activeMotivation = Math.floor(Math.random() * (5));
+                this.instruction.activeMotivation = Math.floor(Math.random() * (8));
             }
             if(this.instruction.motivationSet === true)
             {
                 this.ctx.beginPath();
                 this.ctx.font = "20px Monospace";
                 this.ctx.fillStyle = "#ffffff";
-                this.ctx.fillText(`${this.instruction.instruction_arr[this.instruction.activeMotivation]}`, this.canvas.width / 2 - 200, this.canvas.height - 5);
+                this.ctx.fillText(`${this.instruction.instruction_arr[this.instruction.activeMotivation]}`, this.canvas.width / 2 - 220, this.canvas.height - 5);
                 this.ctx.closePath();
             }
         }

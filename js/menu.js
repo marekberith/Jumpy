@@ -24,6 +24,8 @@ class Menu
         this.chart.src = 'graphics/chart.png';
         this.chartScreen = new Image();
         this.chartScreen.src = 'graphics/rebricek.jpg';
+        this.chartLayer = new Image();
+        this.chartLayer.src = 'graphics/chartlayer.png';
         this.home = new Image();
         this.home.src = 'graphics/home.png';
         this.difficulty = 1;
@@ -37,11 +39,16 @@ class Menu
         this.onvoice.src = 'graphics/soundon.png';
         this.offvoice = new Image();
         this.offvoice.src = 'graphics/soundoff.png';
+        this.instructions = new Image();
+        this.instructions.src = 'graphics/info.png';
+        this.instructionsScreen = new Image();
+        this.instructionsScreen.src = 'graphics/instrukcie.jpg';
         this.menuActive = 0;
         this.settingsActive = 0;
         this.preloadscreenActive = 0;
         this.controllerActive = 0;
         this.chartscreenActive = 0;
+        this.infoActive = 0;
         this.voiceEnabled = true;
     }
     checkifPlayed()
@@ -67,6 +74,7 @@ class Menu
         this.ctx.drawImage(menu.settings, 0,canvas.height - 100, 100, 100);
         this.ctx.drawImage(menu.controller, 0, 20, 100, 50);
         this.ctx.drawImage(menu.chart, canvas.width - 110, 20, 110, 55);
+        this.ctx.drawImage(menu.instructions, canvas.width - 110, canvas.height - 75, 100, 50);
     }
     Settings()
     {
@@ -74,6 +82,7 @@ class Menu
         this.preloadscreenActive = 0;
         this.controllerActive = 0;
         this.chartscreenActive = 0;
+        this.infoActive = 0;
         this.settingsActive = 1;
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.drawImage(this.settingsScreen, 0, 0, this.canvas.width, this.canvas.height);
@@ -90,6 +99,7 @@ class Menu
         this.settingsActive = 0;
         this.preloadscreenActive = 0;
         this.chartscreenActive = 0;
+        this.infoActive = 0;
         this.controllerActive = 1;
         this.ctx.clearRect(0,0, this.canvas.width, this.canvas.height);
         this.ctx.drawImage(this.controllerScreen, 0, 0, this.canvas.width, this.canvas.height);
@@ -102,6 +112,7 @@ class Menu
         this.controllerActive = 0;
         this.settingsActive = 0;
         this.chartscreenActive = 0;
+        this.infoActive = 0;
         this.preloadscreenActive = 1;
         this.ctx.drawImage(this.easy, 280, 500);
         this.ctx.drawImage(this.medium, 440, 500);
@@ -113,9 +124,11 @@ class Menu
         this.preloadscreenActive = 0;
         this.controllerActive = 0;
         this.settingsActive = 0;
+        this.infoActive = 0;
         this.chartscreenActive = 1;
         this.ctx.clearRect(0,0, this.canvas.width, this.canvas.height);
         this.ctx.drawImage(this.chartScreen, 0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.drawImage(this.chartLayer, 0, 320, this.canvas.width, 200);
         this.ctx.drawImage(this.home, this.canvas.width - 100, this.canvas.height - 75, 110, 55);
         this.ctx.beginPath();
         this.ctx.font = "30px Monospace";
@@ -128,5 +141,17 @@ class Menu
                 this.ctx.fillText(`${i + 1}. Hráč: ${chart.playersArr[i][1]} ${chart.playersArr[i][0]}`, menu.mrgLeft + 130, 350 + i*40);
         }
         this.ctx.closePath();
+    }
+    Instructions()
+    {
+        this.menuActive = 0;
+        this.chartscreenActive = 0;
+        this.preloadscreenActive = 0;
+        this.controllerActive = 0;
+        this.settingsActive = 0;
+        this.infoActive = 1;
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.drawImage(this.instructionsScreen, 0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.drawImage(this.home, this.canvas.width - 100, this.canvas.height - 75, 110, 55);
     }
 }
