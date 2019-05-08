@@ -7,10 +7,35 @@ window.addEventListener("keydown", function () {
             }
         }
     }
+    if(game.endofgameState === 0 && game.gamePaused === 0)
+    {
+        let key = event.keyCode;
+        if(key === 80)
+            game.pause();
+    }
+    if(game.endofgameState === 0 && game.gamePaused === 1 && assets.keyPressed === 1)
+    {
+        let key = event.keyCode;
+        if(key === 80)
+        {
+            assets.keyPressed = 0;
+            game.gamePaused = 0;
+            int = setInterval(() => game.start(), 1000/65);
+        }
+    }
+});
+window.addEventListener("keyup", function () {
+    if(game.endofgameState === 0 && game.gamePaused === 1)
+    {
+        let key = event.keyCode;
+        if(key === 80)
+            assets.keyPressed = 1;
+    }
 });
 window.addEventListener("click", function () {
     this.xcoordinate = event.clientX;
     this.ycoordinate = event.clientY;
+    //alert(this.xcoordinate + ' ' + this.ycoordinate + ' ' + this.menu.mrgLeft);
     if(game.endofgameState === 0)
     {
         if(game.gamePaused === 0)
@@ -109,6 +134,12 @@ window.addEventListener("click", function () {
             alert('Aktivovaná obtiažnosť ťažká');
             menu.difficulty = 3;
         }
+        if (this.xcoordinate > 1042 + menu.mrgLeft && this.xcoordinate < 1098 + menu.mrgLeft && this.ycoordinate > 611 && this.ycoordinate < 665)
+        {
+            menu.preloadscreenActive = 0;
+            assets.activateForm(false);
+            mainMenu(menu.voiceEnabled);
+        }
     }
     else if(menu.controllerActive === 1)
     {
@@ -128,7 +159,7 @@ window.addEventListener("click", function () {
     }
     else if(menu.infoActive === 1)
     {
-        if (this.xcoordinate > 1042 + menu.mrgLeft && this.xcoordinate < 1098 + menu.mrgLeft && this.ycoordinate > 611 && this.ycoordinate < 665)
+        if (this.xcoordinate > 1030 + menu.mrgLeft && this.xcoordinate < 1081 + menu.mrgLeft && this.ycoordinate > 611 && this.ycoordinate < 665)
         {
             menu.infoActive = 0;
             mainMenu(menu.voiceEnabled);

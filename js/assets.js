@@ -12,6 +12,7 @@ class Assets
         this.enterName = document.getElementById('enterName');
         this.enterName.style.left = 430 + menu.mrgLeft + 'px';
         this.mouseClick = new Audio('sound/mouse-click.wav');
+        this.keyPressed = 0;
     }
     activategameoverButtons()
     {
@@ -31,12 +32,17 @@ class Assets
         this.newgameAction.value = "loadGame();assets.clickaButton();menu.menuActive = 0;";
         this.newGame.setAttributeNode(this.newgameAction);
     }
-    activateForm()
+    activateForm(value)
     {
-        this.enterName.style.display = "initial";
-        this.submitNameAction = document.createAttribute("onclick");
-        this.submitNameAction.value = "assets.saveName();";
-        this.submitName.setAttributeNode(this.submitNameAction);
+        if(value)
+        {
+            this.enterName.style.display = "initial";
+            this.submitNameAction = document.createAttribute("onclick");
+            this.submitNameAction.value = "assets.saveName();";
+            this.submitName.setAttributeNode(this.submitNameAction);
+        }
+        else
+            this.enterName.style.display = "none";
     }
     clickaButton()
     {
@@ -48,7 +54,9 @@ class Assets
         this.playerName = document.getElementById('nameArray').value;
         if(this.playerName.length > 0)
         {
+            menu.preloadscreenActive = 0;
             this.clickaButton();
+            this.activateForm(false);
             playaGame();
         }
         else

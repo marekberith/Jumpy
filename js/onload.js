@@ -26,7 +26,7 @@ window.onload = function()
         menu.preloadscreenActive = 1;
         assets.newGame.style.display = "none";
         assets.newGame.removeAttribute('onclick');
-        assets.activateForm();
+        assets.activateForm(true);
         menu.preloadScreen();
     };
     playaGame = function(){
@@ -34,4 +34,3 @@ window.onload = function()
     };
     functionHandler();
 };
-

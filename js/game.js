@@ -63,6 +63,8 @@ class Game {
             this.infected();
         this.draw();
         this.way.increaseSpeed();
+        if(this.gameAudio.onended)
+            this.loopSound();
     }
 
     restart()
@@ -85,10 +87,15 @@ class Game {
 
     pause()
     {
-        this.gamePaused = 1;
         clearInterval(int);
+        this.gamePaused = 1;
         this.ctx.drawImage(this.mask, 0, 0, 1104, 621);
         this.ctx.drawImage(this.playButton, 995, 10, 120, 60);
+    }
+
+    loopSound()
+    {
+        game.gameAudio.play();
     }
 
     setVariables()      //this function starts only when restarting game !
@@ -225,7 +232,7 @@ class Game {
         this.ctx.clearRect(0, 0, canvas.width, canvas.height);
         this.ctx.drawImage(this.gameOverScreen, 0, 0, canvas.width, canvas.height);
         this.ctx.beginPath();
-        this.ctx.font = "33px Monospace";
+        this.ctx.font = "33px Arial";
         this.ctx.fillStyle = "#7b8586";
         this.ctx.fontWeight = "bold";
         this.ctx.fillText(`${this.score}`, canvas.width / 2 + 70, canvas.height / 2 + 143);
@@ -273,27 +280,27 @@ class Game {
         {
             this.instruction.motivationSet = false;
             this.ctx.beginPath();
-            this.ctx.font = "20px Monospace";
+            this.ctx.font = "20px Arial";
             this.ctx.fillStyle = "#ffffff";
             if(this.way.potionType === 0)
             {
-                this.ctx.font = "20px Monospace";
+                this.ctx.font = "20px Arial";
                 this.ctx.fillText(`Si nakazený ! 3 sekundy bežíš rýchlejšie`, this.canvas.width / 2 - 200, this.canvas.height - 5);
             }
             else if(this.way.potionType === 1)
             {
-                this.ctx.font = "15px Monospace";
+                this.ctx.font = "15px Arial";
                 this.ctx.fillText(`Objavil si superschopnosť Jumpyho ! 3 sekundy bežíš pomalšie`, this.canvas.width / 2 - 266, this.canvas.height - 5);
             }
             else if(this.way.potionType === 2)
             {
-                this.ctx.font = "20px Monospace";
+                this.ctx.font = "20px Arial";
                 this.ctx.fillText(`Aký silák ! 3 sekundy si nezničiteľný`, this.canvas.width / 2 - 230, this.canvas.height - 5);
             }
             this.ctx.closePath();
         }
         this.ctx.beginPath();
-        this.ctx.font = "25px Monospace";
+        this.ctx.font = "25px Arial";
         this.ctx.fillStyle = "#ffffff";
         this.ctx.fillText(`${this.score} metrov`, 900, this.canvas.height - 5);
         this.ctx.closePath();
@@ -366,7 +373,7 @@ class Game {
             if(this.instruction.motivationSet === true)
             {
                 this.ctx.beginPath();
-                this.ctx.font = "20px Monospace";
+                this.ctx.font = "20px Arial";
                 this.ctx.fillStyle = "#ffffff";
                 this.ctx.fillText(`${this.instruction.instruction_arr[this.instruction.activeMotivation]}`, this.canvas.width / 2 - 220, this.canvas.height - 5);
                 this.ctx.closePath();

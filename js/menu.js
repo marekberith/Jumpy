@@ -74,7 +74,7 @@ class Menu
         this.ctx.drawImage(menu.settings, 0,canvas.height - 100, 100, 100);
         this.ctx.drawImage(menu.controller, 0, 20, 100, 50);
         this.ctx.drawImage(menu.chart, canvas.width - 110, 20, 110, 55);
-        this.ctx.drawImage(menu.instructions, canvas.width - 110, canvas.height - 75, 100, 50);
+        this.ctx.drawImage(menu.instructions, canvas.width - 100, canvas.height - 75, 100, 50);
     }
     Settings()
     {
@@ -117,6 +117,7 @@ class Menu
         this.ctx.drawImage(this.easy, 280, 500);
         this.ctx.drawImage(this.medium, 440, 500);
         this.ctx.drawImage(this.hard, 615, 500);
+        this.ctx.drawImage(this.home, this.canvas.width - 100, this.canvas.height - 75, 110, 55);
     }
     Chart()
     {
@@ -131,14 +132,14 @@ class Menu
         this.ctx.drawImage(this.chartLayer, 0, 320, this.canvas.width, 200);
         this.ctx.drawImage(this.home, this.canvas.width - 100, this.canvas.height - 75, 110, 55);
         this.ctx.beginPath();
-        this.ctx.font = "30px Monospace";
+        this.ctx.font = "28px Arial";
         this.ctx.color = "#000000";
         for(i = 0; i < 5; i++)
         {
             if(chart.playersArr[i][1] === undefined)
-                this.ctx.fillText(`Na ${i + 1}. mieste sa nenachádza žiaden hráč`, menu.mrgLeft + 15, 350 + i*40);
+                this.ctx.fillText(`Na ${i + 1}. mieste sa nenachádza žiaden hráč`, menu.mrgLeft + 80, 350 + i*40);
             else
-                this.ctx.fillText(`${i + 1}. Hráč: ${chart.playersArr[i][1]} ${chart.playersArr[i][0]}`, menu.mrgLeft + 130, 350 + i*40);
+                this.ctx.fillText(`${i + 1}. Hráč: ${chart.playersArr[i][1]} ${chart.playersArr[i][0]}`, menu.mrgLeft + 150, 350 + i*40);
         }
         this.ctx.closePath();
     }
