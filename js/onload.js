@@ -8,7 +8,10 @@ window.onload = function()
         chart = new Chart();
         assets = new Assets();
         game = new Game(canvas);
-        mainMenu(true);
+        setTimeout(function () 
+        {
+            mainMenu(true);
+        }, 60);
     };
     mainMenu = function(sound) {
         menu.menuActive = 1;
