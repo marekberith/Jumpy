@@ -11,7 +11,7 @@ window.onload = function()
         setTimeout(function () 
         {
             mainMenu(true);
-        }, 60);
+        }, 500);
     };
     mainMenu = function(sound) {
         menu.menuActive = 1;
