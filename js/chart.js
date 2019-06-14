@@ -15,8 +15,11 @@ class Chart
         {
             if(score > this.playersArr[j][0])
             {
-                if(j < 4)
-                    this.playersArr[j+1][0] = this.playersArr[j][0];
+                for(let q = 4; q > j; q--)
+                {
+                    this.playersArr[q][0] = this.playersArr[q-1][0];
+                    this.playersArr[q][1] = this.playersArr[q-1][1];
+                }
                 this.playersArr[j][0] = score;
                 this.playersArr[j][1] = name;
                 return j;
@@ -26,6 +29,8 @@ class Chart
     }
     printPosition(position)
     {
+        if(position === -21)
+            game.ctx.fillText(`${position + 1}`, canvas.width / 2 + 170, canvas.height / 2 + 193);
         game.ctx.fillText(`${position + 1}`, canvas.width / 2 + 170, canvas.height / 2 + 193);
     }
 }

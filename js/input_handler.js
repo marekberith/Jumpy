@@ -166,3 +166,8 @@ window.addEventListener("click", function () {
         }
     }
 });
+window.addEventListener("resize", function(){
+    game.canvas.style.marginLeft = (window.innerWidth - canvas.width) / 2 + 'px';
+    menu.mrgLeft = (window.innerWidth - canvas.width) / 2;
+    assets.actualizeAssets();
+});

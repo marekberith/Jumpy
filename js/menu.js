@@ -133,13 +133,13 @@ class Menu
         this.ctx.drawImage(this.home, this.canvas.width - 100, this.canvas.height - 75, 110, 55);
         this.ctx.beginPath();
         this.ctx.font = "28px Arial";
-        this.ctx.color = "#000000";
+        this.ctx.fillStyle = "#000000";
         for(i = 0; i < 5; i++)
         {
             if(chart.playersArr[i][1] === undefined)
-                this.ctx.fillText(`Na ${i + 1}. mieste sa nenachádza žiaden hráč`, menu.mrgLeft + 80, 350 + i*40);
+                this.ctx.fillText(`Na ${i + 1}. mieste sa nenachádza žiaden hráč`, 300, 350 + i*40);
             else
-                this.ctx.fillText(`${i + 1}. Hráč: ${chart.playersArr[i][1]} ${chart.playersArr[i][0]}`, menu.mrgLeft + 150, 350 + i*40);
+                this.ctx.fillText(`${i + 1}. Hráč: ${chart.playersArr[i][1]} ${chart.playersArr[i][0]}`, 296, 350 + i*40);
         }
         this.ctx.closePath();
     }

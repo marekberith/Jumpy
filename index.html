@@ -2,7 +2,7 @@
 <html lang="sk">
 <head>
 	<meta charset="UTF-8">
-	<meta name="description" content="@mberith_interactive_game">
+	<meta name="description" content="Jumpy - interactive run and jump game">
 	<meta name="author" content="Marek Berith">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script src = "js/game_objects.js"></script>
@@ -13,19 +13,27 @@
 	<script src = "js/assets.js"></script>
 	<script src = "js/menu.js"></script>
 	<link rel="stylesheet" href="css/assets.css">
-	<title> Marek Berith interactive game</title>
+	<title> Jumpy - interactive run and jump game </title>
 </head>
 <body style="font-family: monospace; background-color: black; margin: 0 0 0 0;">
-	<h1 style = "font-family: monospace; color: white; text-align: center; margin: 10px 0 10px 0;"> Jumpy - interactive run and jump game </h1>
-	<canvas id = "theCanvas" style = "border: 2px solid #a9b3b4; margin: 0 0 0 0;"> </canvas>
-	<footer style = "position: absolute; bottom: 1%; font-family: monospace; font-size: 9px; color: white;">Marek Berith 2019
-	</footer>
-	<button id="playAgain" class="classicButton" type="button" style="display: none; position: absolute; top: 400px;">Hraj znovu</button>
-	<button id="backtoMenu" class="classicButton" type="button" style="display: none; position: absolute; top: 400px;">Vráť sa na menu</button>
-	<button id="newGame" class="classicButton" type="button" style="display: none; position: absolute; top: 400px;">Nová hra</button>
-	<div id="enterName" style="display: none; position: absolute; top: 405px; z-index: 10;">
-		<input id="nameArray" type="text" name="playerName" style="padding-right: 390px; padding-bottom: 13px; font-size: 20px; border: 2px solid black; border-radius: 10px; background-color: rgba(255, 255, 255, 0); border: none;">
-		<input id="submitName" type="submit" class="classicButton" value="Hraj" style="display: block; padding: 5px; background-color: #a9b3b4; border: none; border-radius: 5px; z-index: 2; position: relative; top: -45px; left: 552px; padding: 9px;">
+	<div id="loaded">
+		<h1 style = "font-family: monospace; color: white; text-align: center; margin: 10px 0 10px 0;"> Jumpy - interactive run and jump game </h1>
+		<canvas id = "theCanvas" style = "border: 2px solid #a9b3b4; margin: 0 0 0 0;"> </canvas>
+		<footer style = "position: absolute; bottom: 1%; font-family: monospace; font-size: 9px; color: white;">Marek Berith 2019
+		</footer>
+		<button id="playAgain" class="classicButton" type="button" style="display: none; position: absolute; top: 400px;">Hraj znovu</button>
+		<button id="backtoMenu" class="classicButton" type="button" style="display: none; position: absolute; top: 400px;">Vráť sa na menu</button>
+		<button id="newGame" class="classicButton" type="button" style="display: none; position: absolute; top: 400px;">Nová hra</button>
+		<div id="enterName" style="display: none; position: absolute; top: 405px; z-index: 10;">
+			<input id="nameArray" type="text" name="playerName" style="padding-right: 390px; padding-bottom: 13px; font-size: 20px; border: 2px solid black; border-radius: 10px; background-color: rgba(255, 255, 255, 0); border: none;">
+			<input id="submitName" type="submit" class="classicButton" value="Hraj" style="display: block; padding: 5px; background-color: #a9b3b4; border: none; border-radius: 5px; z-index: 2; position: relative; top: -45px; left: 552px; padding: 9px;">
+		</div>
+	</div>
+	<div id="notLoaded">
+		<h1 style = "font-family: monospace; color: white; text-align: center; margin: 10px 0 10px 0;"> Your device is too small to display this page. Sorry for the inconvenience :( . </h1>
+	</div>
+	<div id="deviceCheck" style="visibility: hidden;">
+		<h1 style = "font-family: monospace; color: white; text-align: center; margin: 10px 0 10px 0;"> Touch devices are not supported. Sorry for the inconvenience :( . </h1>
 	</div>
 </body>
 </html>

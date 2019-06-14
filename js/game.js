@@ -317,7 +317,8 @@ class Game {
     }
     drawWay()
     {
-        for (let j = 0; j < 7; j++) {
+        for (let j = 0; j < 7; j++)
+        {
             this.ctx.drawImage(this.way.way_arr[this.way.actualWay[j][0]], this.way.actualWay[j][1], this.way.actualWay[j][2], 192, 132);      //vykreslovanie cesty
             if(this.way.actualWay[j][3] >= 0 && this.way.actualWay[j][3] <= 7)                      //vykreslovanie prekazok
             {
@@ -328,7 +329,7 @@ class Game {
             }
         }
         if(this.way.actualWay[6][1] < -192)
-            this.way.checkWays(this.returnNumber(), this.component.potionPosX, this.component.potionActive);
+            this.way.checkWays(Math.floor(Math.random() *(2 + 1)), this.component.potionPosX, this.component.potionActive);
         this.way.moveWays();
         if(this.way.elixirEnabled === true)
             this.way.checkPotion(this.jumpy.posx, this.jumpy.movement);
@@ -342,7 +343,8 @@ class Game {
         }
     }
 
-    drawJumpy() {
+    drawJumpy()
+    {
         this.jumpy.checkJump();
         this.jumpy.jumpySwitch();
         if(this.jumpy.jump === true)
@@ -351,27 +353,22 @@ class Game {
             this.ctx.drawImage(this.jumpy.look[this.jumpy.lookSet], this.jumpy.posx, this.jumpy.posy + this.jumpy.movement, 171, 241);
     }
 
-    drawClouds(){
+    drawClouds()
+    {
         for(let j = 0; j < 4; j++)
             this.ctx.drawImage(this.component.component_arr[this.component.actualComponents[j][0]], this.component.actualComponents[j][1], this.component.actualComponents[j][2], 120, 120);
         this.component.generateClouds();
         this.component.moveClouds();
     }
 
-    returnNumber() {
-        return Math.floor(Math.random() *(2 + 1));
-    }
-
-    writeMotivation() {
-        if(this.way.potionSet === false)
-        {
-            if(i % 200 === 0)
-            {
+    writeMotivation()
+    {
+        if (this.way.potionSet === false) {
+            if (i % 200 === 0) {
                 this.instruction.motivationSet = true;
                 this.instruction.activeMotivation = Math.floor(Math.random() * (8));
             }
-            if(this.instruction.motivationSet === true)
-            {
+            if (this.instruction.motivationSet === true) {
                 this.ctx.beginPath();
                 this.ctx.font = "20px Arial";
                 this.ctx.fillStyle = "#ffffff";
@@ -380,4 +377,5 @@ class Game {
             }
         }
     }
+
 }

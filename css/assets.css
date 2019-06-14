@@ -1,3 +1,25 @@
+@media screen and (min-width: 1150px), screen and (min-height: 680px)
+{
+    #notLoaded
+    {
+        display: none;
+    }
+    #loaded
+    {
+        display: initial;
+    }
+}
+@media screen and (max-width: 1149px), screen and (max-height: 679px)
+{
+    #loaded
+    {
+        display: none;
+    }
+    #notLoaded
+    {
+        display: initial;
+    }
+}
 .classicButton {
     display: none;
     text-align: center;

@@ -123,7 +123,6 @@ class Way
 	}
 	checkWays(number)
 	{
-		//mark++;
 		this.actualWay.pop();
 		this.actualWay.splice(0,0, new Array(3));
 		if(number === 2 && this.actualWay[1][0] === number)
@@ -133,7 +132,6 @@ class Way
 		this.actualWay[0][0] = number;
 		this.actualWay[0][1] = this.actualWay[1][1] + 192;
 		this.actualWay[0][2] = canvas.height - 132;
-		//console.log(this.actualWay[0][2]);
 		if(this.elixirEnabled === true)
 		{
 			if(this.actualWay[0][0] !== 2 && this.actualWay[1][3] === undefined && this.actualWay[2][3] === undefined)

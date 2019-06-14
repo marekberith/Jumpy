@@ -14,6 +14,13 @@ class Assets
         this.mouseClick = new Audio('sound/mouse-click.wav');
         this.keyPressed = 0;
     }
+    actualizeAssets()
+    {
+        this.playAgain.style.left = 664 + menu.mrgLeft + 'px';
+        this.backtoMenu.style.left = 284 + menu.mrgLeft + 'px';
+        this.newGame.style.left = 497 + menu.mrgLeft + 'px';
+        this.enterName.style.left = 430 + menu.mrgLeft + 'px';
+    }
     activategameoverButtons()
     {
         this.playAgain.style.display = "initial";
